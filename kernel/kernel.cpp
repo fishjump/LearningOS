@@ -10,7 +10,7 @@ void draw_color(int *addr, int color)
     *((char *)addr + 2) = (char)(color >> 16);
 }
 
-void kernel_main(void)
+extern "C" void kernel_main(void)
 {
     // 1360 * 768
     // so, red : x:[595, 674] y:[299, 378]  green:  x:[685, 764] y:[299, 378]
