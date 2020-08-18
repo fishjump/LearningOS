@@ -10,7 +10,7 @@ set(EFI_FILE "${CMAKE_BINARY_DIR}/bootloader.efi")
 
 set(LIBS ${OBJECT_FILE} /usr/lib/crt0-efi-x86_64.o /usr/lib/libgnuefi.a /usr/lib/libefi.a)
 
-set(C_FLAGS -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER)
+set(C_FLAGS -std=c11 -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER)
 set(LD_FLAGS -nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic)
 set(OBJCP_FLAGS -j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela  -j .reloc -O efi-app-x86_64)
 
