@@ -10,9 +10,9 @@ extern "C" void kernel_main(void)
     int ms_green = 0x77b921;
     int ms_yellow = 0xf8b619;
 
-    for (int x = 0; x < system::io::screen::width; x++)
+    for (int x = 0; x < system::io::screen::screenWidth; x++)
     {
-        for (int y = 0; y < system::io::screen::height; y++)
+        for (int y = 0; y < system::io::screen::screenHeight; y++)
         {
             system::io::screen::drawPixel(x, y, 0);
         }
@@ -48,6 +48,13 @@ extern "C" void kernel_main(void)
         {
             system::io::screen::drawPixel(x, y, ms_yellow);
         }
+    }
+    char hello[] = "Hello world!";
+    int i = 0;
+    while (hello[i] != '\0')
+    {
+        system::io::screen::drawChar(8 * i, 0, 0xffffff, hello[i]);
+        i++;
     }
 
     while (true)
