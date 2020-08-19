@@ -5,8 +5,8 @@
 
 void system::io::screen::drawChar(unsigned x, unsigned y, int color, char ch)
 {
-    const unsigned char *font = asciiFont[ch];
-    
+    const unsigned char *font = asciiFonts[ch];
+
     unsigned xBoundary = x + fontWidth, yBoundary = y + fontHeight;
     for (unsigned _y = y; _y < yBoundary; _y++)
     {
