@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(PROJECT_NAME "kernel")
+set(PROJECT_NAME "Kernel")
 
 set(KERNEL_LDS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/kernel.lds")
 set(KERNEL_SOURCE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/kernel.cpp")
@@ -23,19 +23,19 @@ project (${PROJECT_NAME})
 add_custom_target(KernelComplie ALL 
                     COMMAND g++ -c ${KERNEL_SOURCE_FILE} -o ${KERNEL_OBJECT_FILE} ${CXX_FLAGS}
                     COMMAND as ${HEAD_SOURCE_FILE} -o ${HEAD_OBJECT_FILE} ${ASM_FLAGS}
-                    COMMENT "[Complie] ${SOURCE_FILE} to ${OBJECT_FILE}, ${HEAD_SOURCE_FILE} to ${HEAD_OBJECT_FILE}")
+                    COMMENT "[${PROJECT_NAME}] Complie ${SOURCE_FILE} to ${OBJECT_FILE}, ${HEAD_SOURCE_FILE} to ${HEAD_OBJECT_FILE}")
 
 add_custom_target(KernelLink ALL 
                     DEPENDS KernelComplie
                     COMMAND ld ${LIBS} -o ${ELF_FILE} ${LD_FLAGS}
-                    COMMENT "[Link] ${LIBS} to ${SHARED_OBJECT_FILE}")
+                    COMMENT "[${PROJECT_NAME}] Link ${LIBS} to ${SHARED_OBJECT_FILE}")
 
 add_custom_target(KernelObjCp ALL 
                     DEPENDS KernelLink
                     COMMAND objcopy ${ELF_FILE} ${BIN_FILE} ${OBJCP_FLAGS}
-                    COMMENT "[ObjectCopy] ${ELF_FILE} to ${BIN_FILE}")
+                    COMMENT "[${PROJECT_NAME}] ObjectCopy ${ELF_FILE} to ${BIN_FILE}")
                     
 add_custom_target(KernelClean ALL 
                     DEPENDS KernelObjCp
                     COMMAND rm ${KERNEL_OBJECT_FILE} ${HEAD_OBJECT_FILE} ${ELF_FILE}
-                    COMMENT "[Clean] Delete ${KERNEL_OBJECT_FILE} ${HEAD_OBJECT_FILE} ${ELF_FILE}")
+                    COMMENT "[${PROJECT_NAME}] Delete ${KERNEL_OBJECT_FILE} ${HEAD_OBJECT_FILE} ${ELF_FILE}")

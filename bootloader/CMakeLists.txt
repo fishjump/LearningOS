@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(PROJECT_NAME "bootloader")
+set(PROJECT_NAME "Bootloader")
 
 set(SOURCE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/bootloader.c")
 
@@ -16,21 +16,21 @@ set(OBJCP_FLAGS -j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .r
 
 project (${PROJECT_NAME})
 
-add_custom_target(Complie ALL 
+add_custom_target(BootloaderComplie ALL 
                     COMMAND gcc -c ${SOURCE_FILE} -o ${OBJECT_FILE} ${C_FLAGS}
-                    COMMENT "[Complie] ${SOURCE_FILE} to ${OBJECT_FILE}")
+                    COMMENT "[${PROJECT_NAME}] Complie ${SOURCE_FILE} to ${OBJECT_FILE}")
 
-add_custom_target(Link ALL 
-                    DEPENDS Complie
+add_custom_target(BootloaderLink ALL 
+                    DEPENDS BootloaderComplie
                     COMMAND ld ${LIBS} -o ${SHARED_OBJECT_FILE} ${LD_FLAGS}
-                    COMMENT "[Link] ${OBJECT_FILE} to ${SHARED_OBJECT_FILE}")
+                    COMMENT "[${PROJECT_NAME}] Link ${OBJECT_FILE} to ${SHARED_OBJECT_FILE}")
 
-add_custom_target(ObjCp ALL 
-                    DEPENDS Link
+add_custom_target(BootloaderObjCp ALL 
+                    DEPENDS BootloaderLink
                     COMMAND objcopy ${SHARED_OBJECT_FILE} ${EFI_FILE} ${OBJCP_FLAGS}
-                    COMMENT "[ObjectCopy] ${SHARED_OBJECT_FILE} to ${EFI_FILE}")
+                    COMMENT "[${PROJECT_NAME}] ObjectCopy ${SHARED_OBJECT_FILE} to ${EFI_FILE}")
                     
-add_custom_target(Clean ALL 
-                    DEPENDS ObjCp
+add_custom_target(BootloaderClean ALL 
+                    DEPENDS BootloaderObjCp
                     COMMAND rm ${OBJECT_FILE} ${SHARED_OBJECT_FILE}
-                    COMMENT "[Clean] Delete ${OBJECT_FILE} ${SHARED_OBJECT_FILE}")
+                    COMMENT "[${PROJECT_NAME}] Delete ${OBJECT_FILE} ${SHARED_OBJECT_FILE}")
