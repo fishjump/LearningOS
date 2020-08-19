@@ -18,6 +18,8 @@ set(ASM_FLAGS --64)
 set(LD_FLAGS -T ${KERNEL_LDS_FILE} -b elf64-x86-64)
 set(OBJCP_FLAGS -I elf64-x86-64 -S -R .eh_frame -R .comment -O binary )
 
+project (${PROJECT_NAME})
+
 add_custom_target(KernelComplie ALL 
                     COMMAND g++ -c ${KERNEL_SOURCE_FILE} -o ${KERNEL_OBJECT_FILE} ${CXX_FLAGS}
                     COMMAND as ${HEAD_SOURCE_FILE} -o ${HEAD_OBJECT_FILE} ${ASM_FLAGS}
