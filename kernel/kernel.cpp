@@ -1,4 +1,4 @@
-#include "system/io/screen.hpp"
+#include "system/io/Screen.hpp"
 
 extern "C" void kernel_main(void)
 {
@@ -50,7 +50,7 @@ extern "C" void kernel_main(void)
         }
     }
 
-    while (1)
+    while (true)
     {
     }
 }

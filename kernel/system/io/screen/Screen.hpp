@@ -11,7 +11,10 @@ namespace system
             constexpr unsigned height = 768;
             constexpr unsigned width = 1360;
 
-            void drawPixel(int x, int y, int color);
+            const unsigned char asciiFont[256][16];
+
+            void drawPixel(unsigned x, unsigned y, int color);
+            void drawChar(unsigned x, unsigned y, int color, char ch);
 
         } // namespace screen
 

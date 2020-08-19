@@ -1,7 +1,7 @@
 #ifndef SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
 #define SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
 
-#include "../screen.hpp"
+#include "../Screen.hpp"
 
 void system::io::screen::drawPixel(int x, int y, int color)
 {
