@@ -1,7 +1,7 @@
-#ifndef SYSTEM_IO_SCREEN_DATA_FONT_HPP
-#define SYSTEM_IO_SCREEN_DATA_FONT_HPP
+#ifndef SYSTEM_IO_SCREEN_FONT_HPP
+#define SYSTEM_IO_SCREEN_FONT_HPP
 
-#include "../Screen.hpp"
+#include "Screen.hpp"
 
 namespace system
 {
@@ -329,4 +329,4 @@ namespace system
 
 } // namespace system
 
-#endif // SYSTEM_IO_SCREEN_DATA_FONT_HPP
+#endif // SYSTEM_IO_SCREEN_FONT_HPP
