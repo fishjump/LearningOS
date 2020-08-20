@@ -17,6 +17,10 @@ void system::io::screen::drawChar(unsigned x, unsigned y, int color, char ch)
             {
                 drawPixel(_x, _y, color);
             }
+            else
+            {
+                drawPixel(_x, _y, 0);
+            }
 
             fontRow = fontRow << 1;
         }
