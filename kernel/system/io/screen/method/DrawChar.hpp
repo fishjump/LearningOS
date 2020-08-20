@@ -3,14 +3,14 @@
 
 #include "../Screen.hpp"
 
-void system::io::screen::drawChar(unsigned x, unsigned y, int color, char ch)
+void system::io::screen::drawChar(unsigned x, unsigned y, Color color, char ch)
 {
     const unsigned char *font = asciiFonts[ch];
 
     unsigned xBoundary = x + fontWidth, yBoundary = y + fontHeight;
-    for (unsigned _y = y; _y < yBoundary; _y++)
+    for (unsigned _y = y, fontRowIndex = 0; _y < yBoundary; _y++, fontRowIndex++)
     {
-        char fontRow = font[_y];
+        char fontRow = font[fontRowIndex];
         for (unsigned _x = x; _x < xBoundary; _x++)
         {
             if (fontRow & 0b10000000)
@@ -19,7 +19,7 @@ void system::io::screen::drawChar(unsigned x, unsigned y, int color, char ch)
             }
             else
             {
-                drawPixel(_x, _y, 0);
+                drawPixel(_x, _y, common_color::black);
             }
 
             fontRow = fontRow << 1;
