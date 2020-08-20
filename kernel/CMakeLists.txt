@@ -13,7 +13,7 @@ set(BIN_FILE "${CMAKE_BINARY_DIR}/kernel.bin")
 
 set(LIBS ${HEAD_OBJECT_FILE} ${KERNEL_OBJECT_FILE})
 
-set(CXX_FLAGS -std=c++17 -mcmodel=large -fno-builtin -m64)
+set(CXX_FLAGS -std=c++17 -fno-stack-protector -mcmodel=large -fno-builtin -m64)
 set(ASM_FLAGS --64)
 set(LD_FLAGS -T ${KERNEL_LDS_FILE} -b elf64-x86-64)
 set(OBJCP_FLAGS -I elf64-x86-64 -S -R .eh_frame -R .comment -O binary )
