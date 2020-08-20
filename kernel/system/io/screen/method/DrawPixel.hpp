@@ -3,14 +3,12 @@
 
 #include "../Screen.hpp"
 
-void system::io::screen::drawPixel(unsigned x, unsigned y, int color)
+void system::io::screen::drawPixel(unsigned x, unsigned y, Color color)
 {
     if (0 <= x && x < screenWidth && 0 <= y && y < screenHeight)
     {
         int *addr = (int *)graphicMemory + y * screenWidth + x;
-        *((char *)addr + 0) = (char)(color >> 0);  // B
-        *((char *)addr + 1) = (char)(color >> 8);  // G
-        *((char *)addr + 2) = (char)(color >> 16); // R
+        *addr = color.getColor();
     }
 }
 
