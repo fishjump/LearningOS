@@ -1,8 +1,6 @@
 #ifndef SYSTEM_IO_SCREEN_FONT_HPP
 #define SYSTEM_IO_SCREEN_FONT_HPP
 
-#include "Screen.hpp"
-
 namespace system
 {
 	namespace io
