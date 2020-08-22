@@ -11,10 +11,10 @@ namespace system
 			static const unsigned fontHeight = 16;
 			static const unsigned fontWidth = 8;
 			// unsigned char = fontWidth = 8bits
-			static const unsigned char asciiFonts[fontCount][fontHeight];
+			static const unsigned char fontTable[fontCount][fontHeight];
 		}; // class Font
 
-		const unsigned char Font::asciiFonts[Font::fontCount][Font::fontHeight] = {
+		const unsigned char Font::fontTable[Font::fontCount][Font::fontHeight] = {
 			/*	0000	*/
 			{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
 			{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
