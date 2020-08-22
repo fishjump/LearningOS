@@ -3,9 +3,9 @@
 
 namespace system
 {
-	namespace io
+	namespace media
 	{
-		namespace screen
+		namespace font
 		{
 			constexpr unsigned fontCount = 256;
 			constexpr unsigned fontHeight = 16;
@@ -321,9 +321,9 @@ namespace system
 				{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
 			};
 
-		} // namespace screen
+		} // namespace font
 
-	} // namespace io
+	} // namespace media
 
 } // namespace system
 

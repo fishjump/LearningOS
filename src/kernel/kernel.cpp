@@ -1,6 +1,7 @@
 #include "system/io/Screen.hpp"
 
 using namespace system::io::screen;
+using namespace system::media;
 
 void printLogo()
 {
@@ -59,7 +60,7 @@ extern "C" void kernel_main(void)
     int i = 0;
     while (hello[i] != '\0')
     {
-        drawChar(fontWidth * i, fontHeight * i, common_color::white, hello[i]);
+        drawChar(font::fontWidth * i, font::fontHeight * i, common_color::white, hello[i]);
         i++;
     }
 
