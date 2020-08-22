@@ -1,0 +1,23 @@
+name: LearningOS/Kernel CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: mkdir
+      run: mkdir build_kernel
+    - name: cd
+      run: cd build_kernel
+    - name: cmake
+      run: cmake ../LearningOS/src/kernel
+    - name: make
+      run: make
