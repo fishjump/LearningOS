@@ -7,16 +7,19 @@ namespace system
 {
     namespace io
     {
-        namespace screen
+        class Screen
         {
-            constexpr unsigned screenHeight = 768;
-            constexpr unsigned screenWidth = 1360;
-            const int *graphicMemory = (int *)0xffff800080000000;
+        public:
+            static const unsigned screenHeight = 768;
+            static const unsigned screenWidth = 1360;
+            static const int *graphicMemory;
 
             void drawPixel(unsigned x, unsigned y, system::media::Color color);
             void drawChar(unsigned x, unsigned y, system::media::Color color, char ch);
 
-        } // namespace screen
+        }; // class screen
+
+        const int *Screen::graphicMemory = (const int *)0xffff800080000000;
 
     } // namespace io
 

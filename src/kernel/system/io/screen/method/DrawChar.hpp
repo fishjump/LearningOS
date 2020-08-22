@@ -6,7 +6,7 @@
 
 #include "../Screen.hpp"
 
-void system::io::screen::drawChar(unsigned x, unsigned y, system::media::Color color, char ch)
+void system::io::Screen::drawChar(unsigned x, unsigned y, system::media::Color color, char ch)
 {
     const unsigned char *font = system::media::Font::asciiFonts[ch];
 

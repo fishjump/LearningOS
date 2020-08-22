@@ -5,7 +5,7 @@
 
 #include "../Screen.hpp"
 
-void system::io::screen::drawPixel(unsigned x, unsigned y, system::media::Color color)
+void system::io::Screen::drawPixel(unsigned x, unsigned y, system::media::Color color)
 {
     if (0 <= x && x < screenWidth && 0 <= y && y < screenHeight)
     {

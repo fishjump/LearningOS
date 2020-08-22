@@ -1,7 +1,7 @@
 #include <system/io/Screen.hpp>
 #include <system/media/Color.hpp>
 
-using namespace system::io::screen;
+using namespace system::io;
 using namespace system::media;
 
 void printLogo()
@@ -14,11 +14,13 @@ void printLogo()
     Color ms_green = 0x77b921;
     Color ms_yellow = 0xf8b619;
 
+    Screen screen;
+
     for (int x = 595; x <= 674; x++)
     {
         for (int y = 299; y <= 378; y++)
         {
-            drawPixel(x, y, ms_red);
+            screen.drawPixel(x, y, ms_red);
         }
     }
 
@@ -26,7 +28,7 @@ void printLogo()
     {
         for (int y = 299; y <= 378; y++)
         {
-            drawPixel(x, y, ms_green);
+            screen.drawPixel(x, y, ms_green);
         }
     }
 
@@ -34,7 +36,7 @@ void printLogo()
     {
         for (int y = 389; y <= 468; y++)
         {
-            drawPixel(x, y, ms_blue);
+            screen.drawPixel(x, y, ms_blue);
         }
     }
 
@@ -42,18 +44,20 @@ void printLogo()
     {
         for (int y = 389; y <= 468; y++)
         {
-            drawPixel(x, y, ms_yellow);
+            screen.drawPixel(x, y, ms_yellow);
         }
     }
 }
 
 extern "C" void kernel_main(void)
 {
-    for (int x = 0; x < screenWidth; x++)
+    Screen screen;
+
+    for (int x = 0; x < Screen::screenWidth; x++)
     {
-        for (int y = 0; y < screenHeight; y++)
+        for (int y = 0; y < Screen::screenHeight; y++)
         {
-            drawPixel(x, y, common_color::black);
+            screen.drawPixel(x, y, common_color::black);
         }
     }
 
@@ -61,7 +65,7 @@ extern "C" void kernel_main(void)
     int i = 0;
     while (hello[i] != '\0')
     {
-        drawChar(Font::fontWidth * i, Font::fontHeight * i, common_color::white, hello[i]);
+        screen.drawChar(Font::fontWidth * i, Font::fontHeight * i, common_color::white, hello[i]);
         i++;
     }
 
