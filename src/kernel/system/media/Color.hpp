@@ -22,7 +22,7 @@ namespace system
 
         private:
             int color;
-        };
+        }; // class Color
 
         namespace common_color
         {
