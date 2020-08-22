@@ -8,6 +8,7 @@ namespace system
 		{
 		public:
 			Font(char fontCode) : fontCode(fontCode) {}
+			~Font() = default;
 
 			static const unsigned fontCount = 256;
 			static const unsigned fontHeight = 16;
@@ -16,10 +17,7 @@ namespace system
 			using FontTable = const unsigned char[fontCount][fontHeight];
 			using FontRows = const unsigned char *;
 
-			FontRows getFontRows() const
-			{
-				return fontTable[fontCode];
-			}
+			FontRows getFontRows() const { return fontTable[fontCode]; }
 
 		private:
 			static const FontTable fontTable;

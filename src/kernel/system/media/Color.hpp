@@ -8,14 +8,14 @@ namespace system
         class Color
         {
         public:
+            Color(const int &color) : color(color) {}
             Color(const char &b, const char &g, const char &r)
             {
                 *((char *)&color + 0) = b;
                 *((char *)&color + 1) = g;
                 *((char *)&color + 2) = r;
             }
-
-            Color(const int &color) : color(color) {}
+            ~Color() = default;
 
             int getColor() const { return color; }
 
