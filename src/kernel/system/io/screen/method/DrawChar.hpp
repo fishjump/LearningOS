@@ -8,9 +8,9 @@
 
 void system::io::screen::drawChar(unsigned x, unsigned y, system::media::Color color, char ch)
 {
-    const unsigned char *font = system::media::font::asciiFonts[ch];
+    const unsigned char *font = system::media::Font::asciiFonts[ch];
 
-    unsigned xBoundary = x + system::media::font::fontWidth, yBoundary = y + system::media::font::fontHeight;
+    unsigned xBoundary = x + system::media::Font::fontWidth, yBoundary = y + system::media::Font::fontHeight;
     for (unsigned _y = y, fontRowIndex = 0; _y < yBoundary; _y++, fontRowIndex++)
     {
         char fontRow = font[fontRowIndex];

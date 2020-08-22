@@ -61,7 +61,7 @@ extern "C" void kernel_main(void)
     int i = 0;
     while (hello[i] != '\0')
     {
-        drawChar(font::fontWidth * i, font::fontHeight * i, common_color::white, hello[i]);
+        drawChar(Font::fontWidth * i, Font::fontHeight * i, common_color::white, hello[i]);
         i++;
     }
 
