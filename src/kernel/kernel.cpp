@@ -1,5 +1,5 @@
-#include <system/io/Screen.hpp>
-#include <system/media/Color.hpp>
+#include <system/io.hpp>
+#include <system/media.hpp>
 
 using namespace system::io;
 using namespace system::media;
