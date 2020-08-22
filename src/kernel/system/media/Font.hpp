@@ -7,14 +7,27 @@ namespace system
 		class Font
 		{
 		public:
+			Font(char fontCode) : fontCode(fontCode) {}
+
 			static const unsigned fontCount = 256;
 			static const unsigned fontHeight = 16;
-			static const unsigned fontWidth = 8;
-			// unsigned char = fontWidth = 8bits
-			static const unsigned char fontTable[fontCount][fontHeight];
+			static const unsigned fontWidth = 8; // unsigned char = fontWidth = 8bits
+
+			using FontTable = const unsigned char[fontCount][fontHeight];
+			using FontRows = const unsigned char *;
+
+			FontRows getFontRows() const
+			{
+				return fontTable[fontCode];
+			}
+
+		private:
+			static const FontTable fontTable;
+
+			char fontCode;
 		}; // class Font
 
-		const unsigned char Font::fontTable[Font::fontCount][Font::fontHeight] = {
+		Font::FontTable Font::fontTable = {
 			/*	0000	*/
 			{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
 			{0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
@@ -327,4 +340,3 @@ namespace system
 	} // namespace media
 
 } // namespace system
-
