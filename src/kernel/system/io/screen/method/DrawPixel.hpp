@@ -1,7 +1,8 @@
 #ifndef SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
 #define SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
 
-#include "../../../media/Color.hpp"
+#include <system/media/Color.hpp>
+
 #include "../Screen.hpp"
 
 void system::io::screen::drawPixel(unsigned x, unsigned y, system::media::Color color)

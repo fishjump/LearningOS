@@ -1,8 +1,7 @@
 #ifndef SYSTEM_IO_SCREEN_SCREEN_HPP
 #define SYSTEM_IO_SCREEN_SCREEN_HPP
 
-#include "../../media/Color.hpp"
-#include "../../media/Font.hpp"
+#include <system/media/Color.hpp>
 
 namespace system
 {

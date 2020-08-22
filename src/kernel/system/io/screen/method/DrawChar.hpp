@@ -1,10 +1,10 @@
 #ifndef SYSTEM_IO_SCREEN_METHOD_DRAW_CHAR_HPP
 #define SYSTEM_IO_SCREEN_METHOD_DRAW_CHAR_HPP
 
-#include "../Screen.hpp"
+#include <system/media/Color.hpp>
+#include <system/media/Font.hpp>
 
-#include "../../../media/Color.hpp"
-#include "../../../media/Font.hpp"
+#include "../Screen.hpp"
 
 void system::io::screen::drawChar(unsigned x, unsigned y, system::media::Color color, char ch)
 {

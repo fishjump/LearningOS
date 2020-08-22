@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 set(PROJECT_NAME "Kernel")
 
+set(INCLUDE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 set(KERNEL_LDS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/kernel.lds")
 set(KERNEL_SOURCE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/kernel.cpp")
 set(HEAD_SOURCE_FILE "${CMAKE_CURRENT_SOURCE_DIR}/head.asm")
@@ -13,7 +14,7 @@ set(BIN_FILE "${CMAKE_BINARY_DIR}/kernel.bin")
 
 set(LIBS ${HEAD_OBJECT_FILE} ${KERNEL_OBJECT_FILE})
 
-set(CXX_FLAGS -std=c++17 -fno-stack-protector -mcmodel=large -fno-builtin -m64)
+set(CXX_FLAGS -std=c++17 -I ${INCLUDE_PATH} -fno-stack-protector -mcmodel=large -fno-builtin -m64)
 set(ASM_FLAGS --64)
 set(LD_FLAGS -T ${KERNEL_LDS_FILE} -b elf64-x86-64)
 set(OBJCP_FLAGS -I elf64-x86-64 -S -R .eh_frame -R .comment -O binary )
