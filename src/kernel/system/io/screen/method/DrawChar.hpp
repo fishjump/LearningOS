@@ -1,5 +1,4 @@
-#ifndef SYSTEM_IO_SCREEN_METHOD_DRAW_CHAR_HPP
-#define SYSTEM_IO_SCREEN_METHOD_DRAW_CHAR_HPP
+#pragma once
 
 #include <system/media/Color.hpp>
 #include <system/media/Font.hpp>
@@ -29,5 +28,3 @@ void system::io::Screen::drawChar(unsigned x, unsigned y, system::media::Color c
         }
     }
 }
-
-#endif // SYSTEM_IO_SCREEN_METHOD_DRAW_CHAR_HPP

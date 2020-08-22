@@ -1,5 +1,4 @@
-#ifndef SYSTEM_IO_SCREEN_SCREEN_HPP
-#define SYSTEM_IO_SCREEN_SCREEN_HPP
+#pragma once
 
 #include <system/media/Color.hpp>
 
@@ -24,5 +23,3 @@ namespace system
     } // namespace io
 
 } // namespace system
-
-#endif // SYSTEM_IO_SCREEN_SCREEN_HPP

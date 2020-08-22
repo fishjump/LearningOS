@@ -1,5 +1,4 @@
-#ifndef SYSTEM_IO_SCREEN_FONT_HPP
-#define SYSTEM_IO_SCREEN_FONT_HPP
+#pragma once
 
 namespace system
 {
@@ -329,4 +328,3 @@ namespace system
 
 } // namespace system
 
-#endif // SYSTEM_IO_SCREEN_FONT_HPP

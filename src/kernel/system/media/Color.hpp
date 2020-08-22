@@ -1,5 +1,4 @@
-#ifndef SYSTEM_IO_SCREEN_COLOR_HPP
-#define SYSTEM_IO_SCREEN_COLOR_HPP
+#pragma once
 
 namespace system
 {
@@ -36,5 +35,3 @@ namespace system
     } // namespace media
 
 } // namespace system
-
-#endif // SYSTEM_IO_SCREEN_COLOR_HPP

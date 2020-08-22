@@ -1,5 +1,4 @@
-#ifndef SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
-#define SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
+#pragma once
 
 #include <system/media/Color.hpp>
 
@@ -13,5 +12,3 @@ void system::io::Screen::drawPixel(unsigned x, unsigned y, system::media::Color 
         *addr = color.getColor();
     }
 }
-
-#endif // SYSTEM_IO_SCREEN_METHOD_DRAW_PIXEL_HPP
