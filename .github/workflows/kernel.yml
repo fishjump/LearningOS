@@ -1,4 +1,4 @@
-name: LearningOS CI
+name: LearningOS/Kernel CI
 
 on:
   push:
@@ -14,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: mkdir
-      run: mkdir build
+      run: mkdir build_kernel
     - name: cd
-      run: cd build
+      run: cd build_kernel
     - name: cmake
-      run: cmake ../LearningOS/src
+      run: cmake ../LearningOS/src/kernel
     - name: make
       run: make
