@@ -18,6 +18,6 @@ jobs:
     - name: cd
       run: cd build
     - name: cmake
-      run: cmake ../src/
+      run: cmake ../LearningOS/src
     - name: make
       run: make
