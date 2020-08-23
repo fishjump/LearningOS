@@ -49,9 +49,9 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 	status = getMemoryMap(&memoryMapSize, memoryMap, &mapKey, &descriptorSize, &desVersion);
 	status = exitBootServices(ImageHandle, mapKey);
 
-	void (*kernel_main)(void);
-	kernel_main = (void *)0x100000;
-	kernel_main();
+	void (*kernelMain)(void);
+	kernelMain = (void *)0x100000;
+	kernelMain();
 
 	return EFI_SUCCESS;
 }
