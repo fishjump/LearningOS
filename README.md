@@ -3,17 +3,21 @@ Write this OS for learning OS.
 
 ## TODO
 - [x] bootloader
-- [ ] screen
-  - [x] method drawPixel
-  - [x] method drawChar
-  - [x] class Color  
-  - [ ] frame buffer
-  - [ ] printk
-  - [ ] change screen mode
-- [ ] keyborad
-- [ ] memory
-  - [ ] malloc
-  - [ ] free
+- [ ] system 
+  - [ ] io
+    - [ ] Screen
+      - [x] drawPixel
+      - [x] drawChar
+      - [ ] frame buffer
+      - [ ] printk
+      - [ ] change screen mode
+    - [ ] Keyborad
+  - [ ] memory
+    - [ ] malloc
+    - [ ] free
+  - [x] media
+    - [x] Color
+    - [x] Font 
 
 ## Update Log
 
