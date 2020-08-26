@@ -4,8 +4,8 @@ Write this OS for learning OS.
 ## TODO
 - [x] bootloader
 - [ ] system 
-  - [ ] boot
-    - [ ] BootInfo
+  - [x] boot
+    - [x] BootInfo
   - [ ] io
     - [ ] Screen
       - [x] drawPixel
@@ -22,6 +22,9 @@ Write this OS for learning OS.
     - [x] Font 
 
 ## Update Log
+
+2020/8/26:
+  Implement BootInfo, now we can access data which comes from UEFI, and I use ```system::boot::bootInfo->graphicInfo``` to replace hard-coded screen parameters(memory, width, height, etc.)
 
 2020/8/24:
   I need a class to put bootloader's information(e.g. graphic memory address, memory map, etc.). So, I add an namepsace boot under system.

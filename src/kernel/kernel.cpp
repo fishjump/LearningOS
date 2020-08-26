@@ -1,3 +1,4 @@
+#include <system/boot.hpp>
 #include <system/io.hpp>
 #include <system/media.hpp>
 
@@ -14,13 +15,13 @@ void printLogo()
     Color ms_green = 0x77b921;
     Color ms_yellow = 0xf8b619;
 
-    Screen *screen = Screen::getInstance();
+    Screen screen;
 
     for (int x = 595; x <= 674; x++)
     {
         for (int y = 299; y <= 378; y++)
         {
-            screen->drawPixel(x, y, ms_red);
+            screen.drawPixel(x, y, ms_red);
         }
     }
 
@@ -28,7 +29,7 @@ void printLogo()
     {
         for (int y = 299; y <= 378; y++)
         {
-            screen->drawPixel(x, y, ms_green);
+            screen.drawPixel(x, y, ms_green);
         }
     }
 
@@ -36,7 +37,7 @@ void printLogo()
     {
         for (int y = 389; y <= 468; y++)
         {
-            screen->drawPixel(x, y, ms_blue);
+            screen.drawPixel(x, y, ms_blue);
         }
     }
 
@@ -44,31 +45,33 @@ void printLogo()
     {
         for (int y = 389; y <= 468; y++)
         {
-            screen->drawPixel(x, y, ms_yellow);
+            screen.drawPixel(x, y, ms_yellow);
         }
     }
 }
 
 extern "C" void kernelMain(void)
 {
-    Screen::initScreen();
+    Screen screen;
+    // Screen::initScreen();
 
-    Screen *screen = Screen::getInstance();
+    // Screen *screen = Screen::getInstance();
 
-    for (int x = 0; x < Screen::screenWidth; x++)
+    for (int x = 0; x < screen.width; x++)
     {
-        for (int y = 0; y < Screen::screenHeight; y++)
+        for (int y = 0; y < screen.height; y++)
         {
-            screen->drawPixel(x, y, common_color::black);
+            screen.drawPixel(x, y, common_color::black);
         }
     }
 
-    char hello[] = "Hello world!";
-    int i = 0;
+    char hello[] = "Hello LearningOS! ";
+    int i = 0, screenCursor = 0;
     while (hello[i] != '\0')
     {
-        screen->drawChar(Font::fontWidth * i, Font::fontHeight * i, common_color::white, hello[i]);
+        screen.drawChar(Font::fontWidth * screenCursor, 0, common_color::white, hello[i]);
         i++;
+        screenCursor++;
     }
 
     while (true)

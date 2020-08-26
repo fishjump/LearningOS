@@ -1,5 +1,6 @@
 #pragma once
 
+#include <system/boot.hpp>
 #include <system/media/Color.hpp>
 
 namespace system
@@ -9,16 +10,26 @@ namespace system
         class Screen
         {
         public:
-            static const unsigned screenHeight = 768;
-            static const unsigned screenWidth = 1360;
-            static const int *graphicMemory;
+            Screen() : graphicMemory((const int *)system::boot::bootInfo->graphicInfo.FrameBufferBase),
+                       height(system::boot::bootInfo->graphicInfo.VerticalResolution),
+                       width(system::boot::bootInfo->graphicInfo.HorizontalResolution) {}
+            ~Screen() = default;
+
+            const int *graphicMemory;
+            const unsigned height;
+            const unsigned width;
+
+            static void initScreen();
+            static Screen *getInstance();
 
             void drawPixel(unsigned x, unsigned y, system::media::Color color);
             void drawChar(unsigned x, unsigned y, system::media::Color color, char ch);
 
+        private:
+            static Screen *instance;
         }; // class screen
 
-        const int *Screen::graphicMemory = (const int *)0xffff800080000000;
+        Screen *Screen::instance = nullptr;
 
     } // namespace io
 
