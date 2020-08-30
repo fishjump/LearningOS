@@ -4,5 +4,6 @@
 
 system::io::Screen *system::io::Screen::getInstance()
 {
-    return instance;
+    // return instance;
+    return nullptr;
 }

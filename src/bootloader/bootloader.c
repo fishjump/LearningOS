@@ -53,7 +53,7 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 	// init boot info
 	struct BootInfo *bootInfo = (struct BootInfo *)0x60000;
 	allocatePages(AllocateAddress, EfiConventionalMemory, 1, (EFI_PHYSICAL_ADDRESS *)bootInfo);
-	SetMem((void *)bootInfo, 0x1000, 0);
+	SetMem((void *)bootInfo, 0xffff, 0);
 
 	// init graphic
 	EFI_GRAPHICS_OUTPUT_PROTOCOL *graphicsOutputProtocol = 0;
@@ -75,14 +75,25 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 	UINTN descriptorSize = 0;
 	UINT32 desVersion = 0;
 	status = getMemoryMap(&memoryMapSize, memoryMap, &mapKey, &descriptorSize, &desVersion);
+	memoryMapSize += descriptorSize * 5;
+	status = allocatePool(EfiRuntimeServicesData, memoryMapSize, (VOID **)&memoryMap);
+	SetMem((VOID *)memoryMap, memoryMapSize, 0);
+	status = getMemoryMap(&memoryMapSize, memoryMap, &mapKey, &descriptorSize, &desVersion);
 
 	int descriptorCount = 0;
 	struct MemoryDescriptor *currentNode = bootInfo->memoryInfo.descriptors, *lastNode = NULL;
 	unsigned long lastEndAddr = 0;
+	Print(L"Get EFI_MEMORY_DESCRIPTOR Structure:%018lx\n", memoryMap);
 	for (int i = 0; i < memoryMapSize / descriptorSize; i++)
 	{
 		int memoryType = 0;
-		EFI_MEMORY_DESCRIPTOR *descriptor = (EFI_MEMORY_DESCRIPTOR *)((CHAR8 *)memoryMapSize + i * descriptorSize);
+		EFI_MEMORY_DESCRIPTOR *descriptor = (EFI_MEMORY_DESCRIPTOR *)((CHAR8 *)memoryMap + i * descriptorSize);
+
+		Print(L"MemoryMap %4d %10d (%16lx<->%16lx)\n", descriptor->Type,
+			  descriptor->NumberOfPages,
+			  descriptor->PhysicalStart,
+			  descriptor->PhysicalStart + (descriptor->NumberOfPages << 12));
+
 		if (descriptor->NumberOfPages == 0)
 			continue;
 

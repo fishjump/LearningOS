@@ -1,6 +1,22 @@
 # Learning OS
 Write this OS for learning OS.
 
+## Memory Map
+Memory map 
+|Adress start|Adress end|Description|
+|------------|----------|-----------|
+|0x0         |0xFFF     |EfiBootServicesCode|
+|0x1000      |0x5FFFF   |EfiConventionalMemory|
+|0x60000     |0x6FFFF   |Boot Info|
+|0x70000     |0x9FFFF   |EfiConventionalMemory|
+|0xA0000     |0xFFFFF   |Used by VGA|
+|0x100000    |0x100FFF  |kernel header code|
+|0x101000    |0x101FFF  |page directory entry|
+|0x102000    |0x102FFF  |page table entry|
+|0x103000    |0x103FFF  |page table entry|
+|0x104000    |0x104FFF  |page table entry|
+Get more paging information via: https://wiki.osdev.org/Paging
+
 ## TODO
 - [x] bootloader
 - [ ] system 
@@ -11,7 +27,7 @@ Write this OS for learning OS.
       - [x] drawPixel
       - [x] drawChar
       - [ ] frame buffer
-      - [ ] printk
+      - [ ] print
       - [ ] change screen mode
     - [ ] Keyborad
   - [ ] memory
@@ -22,6 +38,9 @@ Write this OS for learning OS.
     - [x] Font 
 
 ## Update Log
+
+2020/8/30:
+  Update memory map.
 
 2020/8/26:
   Implement BootInfo, now we can access data which comes from UEFI, and I use ```system::boot::bootInfo->graphicInfo``` to replace hard-coded screen parameters(memory, width, height, etc.)

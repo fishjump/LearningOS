@@ -52,27 +52,13 @@ void printLogo()
 
 extern "C" void kernelMain(void)
 {
-    Screen screen;
-    // Screen::initScreen();
+    printLogo();
 
-    // Screen *screen = Screen::getInstance();
+    TextModeScreen tmscreen;
 
-    for (int x = 0; x < screen.width; x++)
-    {
-        for (int y = 0; y < screen.height; y++)
-        {
-            screen.drawPixel(x, y, common_color::black);
-        }
-    }
+    tmscreen.print("Hello LearningOS!\nThis is a print test =w=");
 
-    char hello[] = "Hello LearningOS! ";
-    int i = 0, screenCursor = 0;
-    while (hello[i] != '\0')
-    {
-        screen.drawChar(Font::fontWidth * screenCursor, 0, common_color::white, hello[i]);
-        i++;
-        screenCursor++;
-    }
+    // system::boot::bootInfo->memoryInfo.descriptors->type
 
     while (true)
     {
