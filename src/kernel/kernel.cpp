@@ -1,9 +1,11 @@
 #include <system/boot.hpp>
 #include <system/io.hpp>
 #include <system/media.hpp>
+#include <system/memory.hpp>
 
 using namespace system::io;
 using namespace system::media;
+using namespace system::memory;
 
 void printLogo()
 {
@@ -56,7 +58,11 @@ extern "C" void kernelMain(void)
 
     TextModeScreen tmscreen;
 
-    tmscreen.print("Hello LearningOS!\nThis is a print test =w=");
+    tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
+
+    tmscreen.print("usable 2m pages: ");
+    tmscreen.print(initMemory());
+    tmscreen.print("\n");
 
     // system::boot::bootInfo->memoryInfo.descriptors->type
 

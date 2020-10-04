@@ -1,10 +1,13 @@
 #pragma once
 
+#include <type_traits>
+
 #include <system/media.hpp>
 
 #include "../TextModeScreen.hpp"
 
-system::io::TextModeScreen *system::io::TextModeScreen::print(const char *content)
+template <typename T, typename std::enable_if_t<std::is_same_v<std::decay_t<T>, const char *> || std::is_convertible_v<std::decay_t<T>, const char *>> *>
+system::io::TextModeScreen *system::io::TextModeScreen::print(T content)
 {
     int i = 0;
     while (content[i] != '\0')
@@ -33,26 +36,39 @@ system::io::TextModeScreen *system::io::TextModeScreen::print(const char *conten
     return this;
 }
 
-system::io::TextModeScreen *system::io::TextModeScreen::print(int content)
+template <typename T, typename std::enable_if_t<std::is_integral_v<std::decay_t<T>>> *>
+system::io::TextModeScreen *system::io::TextModeScreen::print(T content)
 {
-    // Cannot implement now, because we don't have 'stack' data structure.
-    // If we wanna have a stack, we need to implement 'malloc' first
+    char arr[64] = {}; // length is long enought now
 
-    // if (content < 0)
-    // {
-    //     int x = cursor % width, y = cursor / width;
-    //     drawChar(x * system::media::Font::fontWidth, y * system::media::Font::fontHeight, system::media::common_color::white, '-');
-    // }
+    if (content == 0)
+    {
+        arr[0] = '0';
+        return print(arr);
+    }
 
-    // while (content != 0)
-    // {
-    //     char ch = content % 10;
-    // }
-    // int i = 0;
-    // while (content[i] != '\0')
-    // {
-    //     i++;
-    // }
+    T tmp = content, length = 0;
+    while (tmp != 0)
+    {
+        tmp /= 10;
+        length++;
+    }
 
-    return this;
+    int index = length - 1, end = 0;
+    if (content < 0)
+    {
+        arr[0] = '-';
+        content = -content;
+        index++;
+        end++;
+    }
+
+    while (index >= end)
+    {
+        arr[index] = '0' + content % 10;
+        content /= 10;
+        index--;
+    }
+
+    return print(arr);
 }

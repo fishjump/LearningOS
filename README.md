@@ -17,6 +17,28 @@ Memory map
 |0x104000    |0x104FFF  |page table entry|
 Get more paging information via: https://wiki.osdev.org/Paging
 
+## x86_64 CPU address map strategy
+
+64 bits address on paper, but only 48 bits are available.
+
+### 1GB page
+
+| Page Directory Index | Page Table Index   | Page Intern Offset  | Total Bits |
+| -------------------- | ------------------ | ------------------- | ---------- |
+| 9 bits (512 items)   | 9 bits (512 items) | 30 bits (1 GB Page) | 48 bits    |
+
+### 2MB page
+
+| Page Directory 1 Index | Page Directory 2 Index | Page Table Index   | Page Intern Offset  | Total Bits |
+| ---------------------- | ---------------------- | ------------------ | ------------------- | ---------- |
+| 9 bits (512 items)     | 9 bits (512 items)     | 9 bits (512 items) | 21 bits (2 MB Page) | 48 bits    |
+
+### 4KB page
+
+| Page Directory 1 Index | Page Directory 2 Index | Page Directory 3 Index | Page Table Index   | Page Intern Offset  | Total Bits |
+| ---------------------- | ---------------------- | ---------------------- | ------------------ | ------------------- | ---------- |
+| 9 bits (512 items)     | 9 bits (512 items)     | 9 bits (512 items)     | 9 bits (512 items) | 12 bits (4 KB Page) | 48 bits    |
+
 ## TODO
 - [x] bootloader
 - [ ] system 
@@ -38,6 +60,8 @@ Get more paging information via: https://wiki.osdev.org/Paging
     - [x] Font 
 
 ## Update Log
+2020/10/4:
+  Didn't update for a long time. I was so busy recently. Partially updated memory management and used sfinae to implement print now. 
 
 2020/8/30:
   Update memory map.
