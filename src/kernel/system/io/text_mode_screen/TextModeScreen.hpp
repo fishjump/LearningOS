@@ -17,10 +17,13 @@ namespace system
             const int row;
             const int column;
 
-            template <typename T, typename std::enable_if_t<std::is_same_v<std::decay_t<T>, const char *> || std::is_convertible_v<std::decay_t<T>, const char *>> * = nullptr>
+            template <typename T, typename std::enable_if_t<
+                                      std::is_same_v<std::decay_t<T>, const char *> ||
+                                      std::is_convertible_v<std::decay_t<T>, const char *>> * = nullptr>
             TextModeScreen *print(T content);
 
-            template <typename T, typename std::enable_if_t<std::is_integral_v<std::decay_t<T>>> * = nullptr>
+            template <typename T, typename std::enable_if_t<
+                                      std::is_integral_v<std::decay_t<T>>> * = nullptr>
             TextModeScreen *print(T content);
 
         private:

@@ -54,19 +54,47 @@ void printLogo()
 
 extern "C" void kernelMain(void)
 {
+    initMemory();
+
     printLogo();
 
     TextModeScreen tmscreen;
 
     tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
 
-    tmscreen.print("usable 2m pages: ");
-    tmscreen.print(initMemory());
+    tmscreen.print("Usable pages: ");
+    tmscreen.print(globalMemoryDescriptor.usablePages);
     tmscreen.print("\n");
 
-    // system::boot::bootInfo->memoryInfo.descriptors->type
-
-    while (true)
+    for (int i = 0; i < globalMemoryDescriptor.memoryDescriptorsCount; i++)
     {
+        tmscreen.print("Start: ");
+        tmscreen.print((unsigned long)globalMemoryDescriptor.memoryDescriptors[i].address);
+        tmscreen.print(" Length: ");
+        tmscreen.print(globalMemoryDescriptor.memoryDescriptors[i].length);
+        tmscreen.print("\n");
     }
+
+    int *onePage = (int *)system::memory::allocatePages(1);
+    for (int i = 0; i < 100; i++)
+    {
+        onePage[i] = i;
+    }
+
+    tmscreen.print("Allocate a page at: ");
+    tmscreen.print((unsigned long)onePage);
+    tmscreen.print("\n");
+
+    for (int i = 0; i < 100; i++)
+    {
+        tmscreen.print(onePage[i]);
+        tmscreen.print(" ");
+    }
+
+    freePages(onePage);
+
+    asm("hlt");
+    // while (true)
+    // {
+    // }
 }

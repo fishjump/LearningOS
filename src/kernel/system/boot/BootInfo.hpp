@@ -13,14 +13,14 @@ namespace system
             const unsigned int VerticalResolution;
             const unsigned int PixelsPerScanLine;
 
-            const unsigned long FrameBufferBase;
+            const int *FrameBufferBase;
             const unsigned long FrameBufferSize;
         };
 
         class MemoryDescriptor
         {
         public:
-            unsigned long address;
+            void *address;
             unsigned long length;
             unsigned int type;
         } __attribute__((packed));
@@ -40,7 +40,7 @@ namespace system
         };
 
         const BootInfo *bootInfo = (BootInfo *)(PHYICAL_TO_VIRTUAL_ADDR(0x60000));
-        
+
     } // namespace boot
 
 } // namespace system

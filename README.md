@@ -60,6 +60,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
     - [x] Font 
 
 ## Update Log
+2020/10/5:
+  Memory management almost done. Now it's quite simply, but let's do some other parts, and then go back to the memory management.
+
 2020/10/4:
   Didn't update for a long time. I was so busy recently. Partially updated memory management and used sfinae to implement print now. 
 

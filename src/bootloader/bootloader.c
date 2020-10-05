@@ -81,8 +81,7 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 	status = getMemoryMap(&memoryMapSize, memoryMap, &mapKey, &descriptorSize, &desVersion);
 
 	int descriptorCount = 0;
-	struct MemoryDescriptor *currentNode = bootInfo->memoryInfo.descriptors, *lastNode = NULL;
-	unsigned long lastEndAddr = 0;
+	struct MemoryDescriptor *descriptors = bootInfo->memoryInfo.descriptors;
 	Print(L"Get EFI_MEMORY_DESCRIPTOR Structure:%018lx\n", memoryMap);
 	for (int i = 0; i < memoryMapSize / descriptorSize; i++)
 	{
@@ -94,8 +93,10 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 			  descriptor->PhysicalStart,
 			  descriptor->PhysicalStart + (descriptor->NumberOfPages << 12));
 
-		if (descriptor->NumberOfPages == 0)
+		if (descriptor->NumberOfPages == 0 || descriptor->PhysicalStart < 0x100000)
+		{
 			continue;
+		}
 
 		switch (descriptor->Type)
 		{
@@ -133,21 +134,10 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 			continue;
 		}
 
-		if ((lastNode != NULL) && (currentNode->type == memoryType) && (descriptor->PhysicalStart == lastEndAddr))
-		{
-			lastNode->length += descriptor->NumberOfPages << 12;
-			lastEndAddr += descriptor->NumberOfPages << 12;
-		}
-		else
-		{
-			currentNode->address = descriptor->PhysicalStart;
-			currentNode->length = descriptor->NumberOfPages << 12;
-			currentNode->type = memoryType;
-			lastEndAddr = descriptor->PhysicalStart + (descriptor->NumberOfPages << 12);
-			lastNode = currentNode;
-			currentNode++;
-			descriptorCount++;
-		}
+		descriptors[descriptorCount].address = descriptor->PhysicalStart;
+		descriptors[descriptorCount].length = descriptor->NumberOfPages << 12;
+		descriptors[descriptorCount].type = memoryType;
+		descriptorCount++;
 	}
 	bootInfo->memoryInfo.count = descriptorCount;
 

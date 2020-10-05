@@ -5,6 +5,6 @@
 
 #include "../Screen.hpp"
 
-system::io::Screen::Screen() : graphicMemory((const int *)system::memory::PhyicalToVirtualAddr(system::boot::bootInfo->graphicInfo.FrameBufferBase)),
+system::io::Screen::Screen() : graphicMemory((const int *)system::memory::PhyicalToVirtualAddr((void *)system::boot::bootInfo->graphicInfo.FrameBufferBase)),
                                height(system::boot::bootInfo->graphicInfo.VerticalResolution),
                                width(system::boot::bootInfo->graphicInfo.HorizontalResolution) {}
