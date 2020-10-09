@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EfiHeader Include="$(SourcePath)/include/efi/"/>
+        <EfiHeader Include="$(SourcePath)/include/efi"/>
         <EfiHeader Include="$(SourcePath)/include/efi/x86_64"/>
     </ItemGroup>
 
