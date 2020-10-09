@@ -1,3 +1,3 @@
 #pragma once
 
-#include "boot/BootInfo.hpp"
+#include "boot/Boot.hpp"

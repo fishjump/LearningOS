@@ -1,4 +1,4 @@
 #pragma once
 
-#include "media/Color.hpp"
-#include "media/Font.hpp"
+#include "media/color.hpp"
+#include "media/font.hpp"

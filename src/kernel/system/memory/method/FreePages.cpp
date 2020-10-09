@@ -1,11 +1,8 @@
 #pragma once
 
-#include <system/memory/GlobalMemory.hpp>
-#include <system/memory/Memory.hpp>
-#include <system/memory/MemoryDescriptor.hpp>
-#include <system/memory/MemoryDescriptorType.hpp>
+#include <system/memory.hpp>
 
-#include "../Memory.hpp"
+#include "../memory.hpp"
 
 void system::memory::freePages(void *addr)
 {

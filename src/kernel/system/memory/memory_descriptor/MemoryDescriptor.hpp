@@ -1,6 +1,6 @@
 #pragma once
 
-#include <system/memory/MemoryDescriptorType.hpp>
+#include <system/memory/memory_descriptor_type.hpp>
 
 namespace system
 {

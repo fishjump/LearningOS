@@ -60,6 +60,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
     - [x] Font 
 
 ## Update Log
+2020/10/9:
+  What an awesome change! I replaced cmake with msbuild, and separated the project to many cpp source files. Thus, we can complie object files respectively. Then I re-organized file structure, it's more clear now.
+
 2020/10/5:
   Memory management almost done. Now it's quite simply, but let's do some other parts, and then go back to the memory management.
 

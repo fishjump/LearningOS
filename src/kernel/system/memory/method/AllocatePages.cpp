@@ -1,11 +1,8 @@
 #pragma once
 
-#include <system/memory/GlobalMemory.hpp>
-#include <system/memory/Memory.hpp>
-#include <system/memory/MemoryDescriptor.hpp>
-#include <system/memory/MemoryDescriptorType.hpp>
+#include <system/memory.hpp>
 
-#include "../Memory.hpp"
+#include "../memory.hpp"
 
 void *system::memory::allocatePages(unsigned count)
 {
@@ -24,7 +21,7 @@ void *system::memory::allocatePages(unsigned count)
             void *addr = (void *)globalMemoryDescriptor.memoryDescriptors[i].address;
             MemoryDescriptor newNode;
             newNode.address = addr;
-            newNode.length = count * PAGE_CURRENT_SIZE;
+            newNode.length = count * PAGE_SIZE;
             newNode.type = globalMemoryDescriptor.memoryDescriptors[i].type;
             newNode.free = false;
 

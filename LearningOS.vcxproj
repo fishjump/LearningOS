@@ -1,0 +1,160 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="check-env" DefaultTargets="build" ToolsVersion="16.0">
+
+    <!-- Custom Tasks -->
+    <UsingTask TaskName="SetSerializedProperties" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <ItemGroup ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+            <ResultItemGroup ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System" />
+            <Code Type="Fragment" Language="cs">
+                <![CDATA[
+                    string[] internMetadataNames = {
+                        "FullPath",
+                        "RootDir",
+                        "Filename",
+                        "Extension",
+                        "RelativeDir",
+                        "Directory",
+                        "RecursiveDir",
+                        "Identity",
+                        "ModifiedTime",
+                        "CreatedTime",
+                        "AccessedTime",
+                        "DefiningProjectFullPath",
+                        "DefiningProjectDirectory",
+                        "DefiningProjectName",
+                        "DefiningProjectExtension"
+                    };
+
+                    foreach (ITaskItem item in ItemGroup)
+                    {
+                        StringBuilder sb = new StringBuilder();
+                        foreach (string parameter in item.MetadataNames)
+                        {
+                            if(!internMetadataNames.Contains(parameter)) 
+                            {
+                                sb.AppendFormat("{0}={1};", parameter, item.GetMetadata(parameter));
+                            }
+                        }
+                        item.SetMetadata("SerializedProperties", sb.ToString());
+                    }
+
+                    ResultItemGroup = ItemGroup;
+                ]]>
+            </Code>
+        </Task>
+    </UsingTask>
+
+    <!-- Project -->
+    <PropertyGroup>
+        <BuildPath>$(MSBuildStartupDirectory)/build</BuildPath>
+        <SourcePath>$(MSBuildStartupDirectory)/src</SourcePath>
+        <OutputPath>/mnt/c/Users/z1052/</OutputPath>
+        <GCC>/usr/bin/gcc</GCC>
+        <GXX>/usr/bin/g++</GXX>
+        <LD>/usr/bin/ld</LD>
+    </PropertyGroup>
+
+    <!-- Subprojects -->
+    <ItemGroup>
+        <Subproject Include="bootloader;kernel" KeepMetadata="@(SubprojectMetadataName)">
+            <ProjectPath>$(SourcePath)/%(Identity)/%(Identity).vcxproj</ProjectPath>
+            <BuildPath>$(BuildPath)/%(Identity)</BuildPath>
+            <SourcePath>$(SourcePath)/%(Identity)</SourcePath>
+            <GCC>$(GCC)</GCC>
+            <GXX>$(GXX)</GXX>
+            <LD>$(LD)</LD>
+        </Subproject>
+
+        <Subproject Update="bootloader">
+            <OutputPath>%(BuildPath)/bootloader.efi</OutputPath>
+        </Subproject>
+
+        <Subproject Update="kernel">
+            <OutputPath>%(BuildPath)/kernel.bin</OutputPath>
+        </Subproject>
+
+    </ItemGroup>
+
+    <!-- Target Run -->
+    <PropertyGroup>
+        <Pwsh>/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe</Pwsh>
+        <TargetRunCommand>$(Pwsh) -NoExit -Command "@(Command)"</TargetRunCommand>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Command Include="cd C:\Users\z1052"></Command>
+        <Command Include=".\run.ps1"></Command>
+        <Command Include="exit"></Command>
+    </ItemGroup>
+
+    <!-- Files -->
+    <PropertyGroup>
+        <OutputImage>$(BuildPath)/$(MSBuildProjectName).img</OutputImage>
+        <TemporaryImage>/tmp/fat32.img</TemporaryImage>
+        <UefiStartupScript>$(SourcePath)/startup.nsh</UefiStartupScript>
+    </PropertyGroup>
+
+    <!-- Clean Files -->
+    <ItemGroup>
+        <CleanFiles Include="$(OutputImage)" />
+        <CleanFiles Include="$(TemporaryImage)" />
+    </ItemGroup>
+
+    <!-- Targets -->
+    <Target Name="build" DependsOnTargets="subproject;empty-image;temporary-image;">
+        <Message Text="Building $(MSBuildProjectName).img." />
+        <Exec Command="mcopy -i $(TemporaryImage) %(Subproject.OutputPath) ::" EchoOff="true" />
+        <Exec Command="mcopy -i $(TemporaryImage) $(UefiStartupScript) ::" EchoOff="true" />
+        <Exec Command="dd if=$(TemporaryImage) of=$(OutputImage) bs=512 count=91669 seek=2048 conv=notrunc status=none" EchoOff="true" />
+        <Copy SourceFiles="$(OutputImage)" DestinationFolder="$(OutputPath)" />
+    </Target>
+
+    <Target Name="subproject">
+        <MSBuild Projects="%(Subproject.ProjectPath)" Properties="%(Subproject.SerializedProperties)" />
+    </Target>
+
+    <Target Name="run">
+        <Exec Command="$(TargetRunCommand)" />
+    </Target>
+
+    <Target Name="build-and-run" DependsOnTargets="build;run;"></Target>
+
+    <Target Name="empty-image">
+        <Message Text="Creating $(OutputImage)." />
+        <Exec Command="dd if=/dev/zero of=$(OutputImage) bs=512 count=93750 status=none" EchoOff="true" />
+        <Exec Command="parted $(OutputImage) -s -a minimal mklabel gpt" EchoOff="true" />
+        <Exec Command="parted $(OutputImage) -s -a minimal mkpart EFI FAT32 2048s 93716s" EchoOff="true" />
+        <Exec Command="parted $(OutputImage) -s -a minimal toggle 1 boot" EchoOff="true" />
+    </Target>
+
+    <Target Name="temporary-image">
+        <Message Text="Creating $(TemporaryImage)." />
+        <Exec Command="dd if=/dev/zero of=$(TemporaryImage) bs=512 count=91669 status=none" EchoOff="true" />
+        <Exec Command="mformat -i $(TemporaryImage) -h 32 -t 32 -n 64 -c 1" EchoOff="true" />
+    </Target>
+
+    <Target Name="check-env">
+        <MakeDir Directories="$(BuildPath)" />
+        <MakeDir Directories="$(OutputPath)" />
+
+        <SetSerializedProperties ItemGroup="@(Subproject)">
+            <Output TaskParameter="ResultItemGroup" ItemName="Result" />
+        </SetSerializedProperties>
+
+        <ItemGroup>
+            <Subproject Remove="@(Subproject)" />
+            <Subproject Include="@(Result)" />
+            <Result Remove="@(Result)" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="clean">
+        <Message Text="Cleaning $(MSBuildProjectName)." />
+        <Delete Files="@(CleanFiles)" />
+        <MSBuild Projects="%(Subproject.ProjectPath)" Targets="clean" />
+    </Target>
+
+</Project>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <system/boot.hpp>
-#include <system/memory/MemoryDescriptor.hpp>
+#include <system/memory/memory_descriptor.hpp>
 
 namespace system
 {
@@ -20,7 +20,7 @@ namespace system
             unsigned int usablePages;
         };
 
-        GlobalMemoryDescriptor globalMemoryDescriptor;
+        extern GlobalMemoryDescriptor globalMemoryDescriptor;
 
     } // namespace memory
 

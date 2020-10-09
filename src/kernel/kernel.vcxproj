@@ -1,0 +1,72 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="check-env" DefaultTargets="build" ToolsVersion="16.0">
+
+    <!-- Project -->
+    <PropertyGroup Condition="false">
+        <BuildPath></BuildPath>
+        <SourcePath></SourcePath>
+        <OutputPath></OutputPath>
+        <GCC></GCC>
+        <GXX></GXX>
+        <LD></LD>
+    </PropertyGroup>
+
+    <!-- Libs -->
+    <ItemGroup>
+        <Lib Include="$(HeadObjectFile)" />
+        <Lib Include="$(KernelObjectFile)" />
+    </ItemGroup>
+
+    <!-- Files -->
+    <PropertyGroup>
+        <LinkScriptFile>$(SourcePath)/kernel.lds</LinkScriptFile>
+        <KernelSourceFile>$(SourcePath)/kernel.cpp</KernelSourceFile>
+        <HeadSourceFile>$(SourcePath)/head.asm</HeadSourceFile>
+
+        <KernelObjectFile>$(BuildPath)/kernel.o</KernelObjectFile>
+        <HeadObjectFile>$(BuildPath)/head.o</HeadObjectFile>
+        <KernelElfFile>$(BuildPath)/kernel.elf</KernelElfFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <CxxSource Include="$(SourcePath)/**/*.cpp" Exclude="$(KernelSourceFile);$(SourcePath)/**/method/**/*.cpp">
+            <CxxObject>$(BuildPath)/%(RecursiveDir)%(Filename).o</CxxObject>
+        </CxxSource>
+    </ItemGroup>
+
+    <!-- Flags -->
+    <PropertyGroup>
+        <AsmFlags>--64</AsmFlags>
+        <CxxFlags>-std=c++17 -I $(SourcePath) -fno-stack-protector -mcmodel=large -fno-builtin -fno-exceptions -m64</CxxFlags>
+        <LdFlags>-T $(LinkScriptFile) -b elf64-x86-64</LdFlags>
+        <ObjCpFlags>-I elf64-x86-64 -S -R .eh_frame -R .comment -O binary</ObjCpFlags>
+    </PropertyGroup>
+
+    <!-- Clean Files -->
+    <ItemGroup>
+        <CleanTarget Include="$(KernelObjectFile)" />
+        <CleanTarget Include="$(HeadObjectFile)" />
+        <CleanTarget Include="$(KernelElfFile)" />
+        <CleanTarget Include="$(OutputPath)" />
+    </ItemGroup>
+
+    <!-- Targets -->
+    <Target Name="build">
+        <Message Text="Building $(MSBuildProjectName)." />
+        <Exec Command="$(GXX) -c $(KernelSourceFile) -o $(KernelObjectFile) $(CxxFlags)" EchoOff="true" />
+        <Exec Command="$(GXX) -c %(CxxSource.Identity) -o %(CxxSource.CxxObject) $(CxxFlags)" EchoOff="true" />
+        <Exec Command="as $(HeadSourceFile) -o $(HeadObjectFile) $(AsmFlags)" EchoOff="true" />
+        <Exec Command="$(LD) @(Lib, ' ') @(CxxSource -> '%(CxxObject)', ' ') -o $(KernelElfFile) $(LdFlags)" EchoOff="true" />
+        <Exec Command="objcopy $(KernelElfFile) $(OutputPath) $(ObjCpFlags)" EchoOff="true" />
+    </Target>
+
+    <Target Name="clean">
+        <Message Text="Cleaning $(MSBuildProjectName)." />
+        <Delete Files="@(CleanFiles)" />
+    </Target>
+
+    <Target Name="check-env">
+        <MakeDir Directories="$(BuildPath)" />
+        <MakeDir Directories="@(CxxSource -> '$(BuildPath)/%(RecursiveDir)')" />
+    </Target>
+
+</Project>

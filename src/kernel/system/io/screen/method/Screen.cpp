@@ -8,3 +8,5 @@
 system::io::Screen::Screen() : graphicMemory((const int *)system::memory::PhyicalToVirtualAddr((void *)system::boot::bootInfo->graphicInfo.FrameBufferBase)),
                                height(system::boot::bootInfo->graphicInfo.VerticalResolution),
                                width(system::boot::bootInfo->graphicInfo.HorizontalResolution) {}
+
+system::io::Screen::~Screen() = default;

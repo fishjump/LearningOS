@@ -1,13 +1,10 @@
 #pragma once
 
-#include <type_traits>
-
 #include <system/media.hpp>
 
 #include "../TextModeScreen.hpp"
 
-template <typename T, typename std::enable_if_t<std::is_same_v<std::decay_t<T>, const char *> || std::is_convertible_v<std::decay_t<T>, const char *>> *>
-system::io::TextModeScreen *system::io::TextModeScreen::print(T content)
+system::io::TextModeScreen *system::io::TextModeScreen::print(const char *content)
 {
     int i = 0;
     while (content[i] != '\0')
@@ -36,8 +33,7 @@ system::io::TextModeScreen *system::io::TextModeScreen::print(T content)
     return this;
 }
 
-template <typename T, typename std::enable_if_t<std::is_integral_v<std::decay_t<T>>> *>
-system::io::TextModeScreen *system::io::TextModeScreen::print(T content)
+system::io::TextModeScreen *system::io::TextModeScreen::print(long long content)
 {
     char arr[64] = {}; // length is long enought now
 
@@ -47,7 +43,7 @@ system::io::TextModeScreen *system::io::TextModeScreen::print(T content)
         return print(arr);
     }
 
-    T tmp = content, length = 0;
+    long long tmp = content, length = 0;
     while (tmp != 0)
     {
         tmp /= 10;

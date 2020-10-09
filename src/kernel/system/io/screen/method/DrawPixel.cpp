@@ -1,6 +1,6 @@
 #pragma once
 
-#include <system/media/Color.hpp>
+#include <system/media.hpp>
 
 #include "../Screen.hpp"
 

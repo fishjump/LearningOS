@@ -1,10 +1,9 @@
 #pragma once
 
 #include <system/boot.hpp>
-#include <system/memory/MemoryDescriptor.hpp>
-#include <system/memory/MemoryDescriptorType.hpp>
+#include <system/memory.hpp>
 
-#include "../Memory.hpp"
+#include "../memory.hpp"
 
 void system::memory::initMemory()
 {
@@ -31,7 +30,7 @@ void system::memory::initMemory()
             break;
         }
     }
-    
+
     globalMemoryDescriptor.memoryDescriptorsCount = i;
     globalMemoryDescriptor.usableMemory = usableMemory;
 

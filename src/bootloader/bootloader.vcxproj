@@ -1,0 +1,58 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="check-env" DefaultTargets="build" ToolsVersion="16.0">
+
+    <!-- Project -->
+    <PropertyGroup Condition="false">
+        <BuildPath></BuildPath>
+        <SourcePath></SourcePath>
+        <OutputPath></OutputPath>
+        <GCC></GCC>
+        <GXX></GXX>
+        <LD></LD>
+    </PropertyGroup>
+
+    <!-- Libs -->
+    <ItemGroup>
+        <Lib Include="/usr/lib/crt0-efi-x86_64.o" />
+        <Lib Include="/usr/lib/libgnuefi.a" />
+        <Lib Include="/usr/lib/libefi.a" />
+    </ItemGroup>
+
+    <!-- Files -->
+    <PropertyGroup>
+        <SourceFile>$(SourcePath)/bootloader.c</SourceFile>
+        <ObjectFile>$(BuildPath)/bootloader.o</ObjectFile>
+        <SharedObjectFile>$(BuildPath)/bootloader.so</SharedObjectFile>
+    </PropertyGroup>
+
+    <!-- Flags -->
+    <PropertyGroup>
+        <CFlags>-std=c11 -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER</CFlags>
+        <LdFlags>-nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic</LdFlags>
+        <ObjCpFlags>-j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela  -j .reloc -O efi-app-x86_64</ObjCpFlags>
+    </PropertyGroup>
+
+    <!-- Clean Files -->
+    <ItemGroup>
+        <CleanTarget Include="$(ObjectFile)" />
+        <CleanTarget Include="$(SharedObjectFile)" />
+        <CleanTarget Include="$(OutputPath)" />
+    </ItemGroup>
+
+    <!-- Targets -->
+    <Target Name="build">
+        <Message Text="Building $(MSBuildProjectName)." />
+        <Exec Command="$(GCC) -c $(SourceFile) -o $(ObjectFile) $(CFlags)" EchoOff="true" />
+        <Exec Command="$(LD) $(ObjectFile) @(Lib, ' ') -o $(SharedObjectFile) $(LdFlags)" EchoOff="true" />
+        <Exec Command="objcopy $(SharedObjectFile) $(OutputPath) $(ObjCpFlags)" EchoOff="true" />
+    </Target>
+
+    <Target Name="clean">
+        <Message Text="Cleaning $(MSBuildProjectName)." />
+        <Delete Files="@(CleanFiles)" />
+    </Target>
+
+    <Target Name="check-env">
+        <MakeDir Directories="$(BuildPath)" />
+    </Target>
+
+</Project>

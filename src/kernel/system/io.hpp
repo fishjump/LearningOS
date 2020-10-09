@@ -1,4 +1,4 @@
 #pragma once
 
-#include "io/Screen.hpp"
-#include "io/TextModeScreen.hpp"
+#include "io/screen.hpp"
+#include "io/text_mode_screen.hpp"

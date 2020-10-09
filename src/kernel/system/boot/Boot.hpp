@@ -1,7 +1,5 @@
 #pragma once
 
-#include <system/memory/Memory.hpp>
-
 namespace system
 {
     namespace boot
@@ -39,7 +37,7 @@ namespace system
             const MemoryInfo memoryInfo;
         };
 
-        const BootInfo *bootInfo = (BootInfo *)(PHYICAL_TO_VIRTUAL_ADDR(0x60000));
+        extern const BootInfo *bootInfo;
 
     } // namespace boot
 
