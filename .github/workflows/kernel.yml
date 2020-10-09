@@ -18,4 +18,4 @@ jobs:
     - name: cd
       run: cd build_kernel
     - name: msbuild
-      run: dotnet msbuild
+      run: dotnet msbuild -v:n -p:OutputPath=./
