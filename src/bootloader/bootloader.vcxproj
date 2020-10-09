@@ -12,13 +12,19 @@
 
     <!-- Libs -->
     <ItemGroup>
-        <Lib Include="/usr/lib/crt0-efi-x86_64.o" />
-        <Lib Include="/usr/lib/libgnuefi.a" />
-        <Lib Include="/usr/lib/libefi.a" />
+        <Lib Include="$(SourcePath)/lib/crt0-efi-x86_64.o" />
+        <Lib Include="$(SourcePath)/lib/libgnuefi.a" />
+        <Lib Include="$(SourcePath)/lib/libefi.a" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EfiHeader Include="$(SourcePath)/include/efi"/>
+        <EfiHeader Include="$(SourcePath)/include/efi/x86_64"/>
     </ItemGroup>
 
     <!-- Files -->
     <PropertyGroup>
+        <LinkScriptFile>$(SourcePath)/elf_x86_64_efi.lds</LinkScriptFile>
         <SourceFile>$(SourcePath)/bootloader.c</SourceFile>
         <ObjectFile>$(BuildPath)/bootloader.o</ObjectFile>
         <SharedObjectFile>$(BuildPath)/bootloader.so</SharedObjectFile>
@@ -26,8 +32,8 @@
 
     <!-- Flags -->
     <PropertyGroup>
-        <CFlags>-std=c11 -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER</CFlags>
-        <LdFlags>-nostdlib -znocombreloc -T /usr/lib/elf_x86_64_efi.lds -shared -Bsymbolic</LdFlags>
+        <CFlags>-std=c11 @(EfiHeader -> '-I %(Identity)', ' ') -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER</CFlags>
+        <LdFlags>-nostdlib -znocombreloc -T $(LinkScriptFile) -shared -Bsymbolic</LdFlags>
         <ObjCpFlags>-j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela  -j .reloc -O efi-app-x86_64</ObjCpFlags>
     </PropertyGroup>
 

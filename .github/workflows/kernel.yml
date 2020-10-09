@@ -1,4 +1,4 @@
-name: LearningOS/Kernel CI
+name: LearningOS CI
 
 on:
   push:
@@ -17,7 +17,6 @@ jobs:
       run: mkdir build_kernel
     - name: cd
       run: cd build_kernel
-    - name: cmake
-      run: cmake ../LearningOS/src/kernel
-    - name: make
-      run: make
+    - name: msbuild
+      run: dotnet msbuild -v:n -p:OutputPath=./ -t:subproject
+      

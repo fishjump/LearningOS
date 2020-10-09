@@ -1,8 +1,8 @@
 #ifndef VEDIO_H
 #define VEDIO_H
 
-#include <efi/efi.h>
-#include <efi/efilib.h>
+#include <efi.h>
+#include <efilib.h>
 
 #include "protocol.h"
 

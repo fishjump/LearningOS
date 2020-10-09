@@ -1,8 +1,8 @@
 #ifndef MEMORY_H
 #define MEMORY_H
 
-#include <efi/efi.h>
-#include <efi/efilib.h>
+#include <efi.h>
+#include <efilib.h>
 
 EFI_STATUS allocatePool(IN EFI_MEMORY_TYPE poolType, IN UINTN bufferSize, OUT VOID **buffer);
 EFI_STATUS freePool(IN VOID *buffer);

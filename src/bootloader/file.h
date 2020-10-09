@@ -1,8 +1,8 @@
 #ifndef FILE_H
 #define FILE_H
 
-#include <efi/efi.h>
-#include <efi/efilib.h>
+#include <efi.h>
+#include <efilib.h>
 
 #include "memory.h"
 #include "protocol.h"
