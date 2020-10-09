@@ -17,6 +17,11 @@
         <Lib Include="$(SourcePath)/lib/libefi.a" />
     </ItemGroup>
 
+    <ItemGroup>
+        <EfiHeader Include="$(SourcePath)/include/efi/"/>
+        <EfiHeader Include="$(SourcePath)/include/efi/x86_64"/>
+    </ItemGroup>
+
     <!-- Files -->
     <PropertyGroup>
         <LinkScriptFile>$(SourcePath)/elf_x86_64_efi.lds</LinkScriptFile>
@@ -27,7 +32,7 @@
 
     <!-- Flags -->
     <PropertyGroup>
-        <CFlags>-std=c11 -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER</CFlags>
+        <CFlags>-std=c11 @(EfiHeader -> '-I %(Identity)', ' ') -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -DEFI_FUNCTION_WRAPPER</CFlags>
         <LdFlags>-nostdlib -znocombreloc -T $(LinkScriptFile) -shared -Bsymbolic</LdFlags>
         <ObjCpFlags>-j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela  -j .reloc -O efi-app-x86_64</ObjCpFlags>
     </PropertyGroup>
