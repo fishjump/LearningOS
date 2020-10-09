@@ -1,5 +1,5 @@
-#include <efi/efi.h>
-#include <efi/efilib.h>
+#include "include/efi/efi.h"
+#include "include/efi/efilib.h"
 
 #include "file.h"
 #include "memory.h"
