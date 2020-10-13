@@ -17,6 +17,7 @@ namespace system
 
             TextModeScreen *print(const char *content);
             TextModeScreen *print(long long content);
+            TextModeScreen *print(unsigned long long content);
 
         private:
             int cursor = 0;

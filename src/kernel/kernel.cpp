@@ -3,12 +3,45 @@
 #include <system/media.hpp>
 #include <system/memory.hpp>
 
+bool flag = true;
+int keydown = 0;
 using namespace system::io;
 using namespace system::media;
 using namespace system::memory;
 
-void printLogo()
+struct interrupt_frame
 {
+    uint32_t eip;
+    uint32_t cs;
+    uint32_t eflags;
+};
+
+void clear()
+{
+    Screen screen;
+
+    for (int x = 0; x < screen.width; x++)
+    {
+        for (int y = 0; y < screen.height; y++)
+        {
+            screen.drawPixel(x, y, system::media::common_color::black);
+        }
+    }
+}
+
+__attribute__((interrupt)) void printLogo(struct interrupt_frame *frame)
+{
+    asm("cli");
+    if (flag)
+    {
+        clear();
+        flag = false;
+    }
+    keydown++;
+    TextModeScreen tmscreen;
+    tmscreen.print("Keydown: ");
+    tmscreen.print((unsigned long long)keydown);
+
     // 1360 * 768
     // so, red : x:[595, 674] y:[299, 378]  green:  x:[685, 764] y:[299, 378]
     //     blue: x:[595, 674] y:[389, 468]  yellow: x:[685, 764] y:[389, 468]
@@ -50,28 +83,42 @@ void printLogo()
             screen.drawPixel(x, y, ms_yellow);
         }
     }
+
+    unsigned char scan_code = system::io::pic::readBtye(0x60);
+
+    system::io::pic::writeBtye(0x20, 0x20);
+
+    asm("sti");
 }
 
 extern "C" void kernelMain(void)
 {
-    initMemory();
-
-    printLogo();
-
+    system::io::pic::initPic();
+    system::memory::initMemory();
+    for (int i = 0x00; i < 0x2f; i++)
+    {
+        system::io::pic::idtTable[i].setHandler((uint64_t)printLogo);
+    }
     TextModeScreen tmscreen;
-
+    extern system::io::pic::IdtTableDescriptor IDT_POINTER;
+    tmscreen.print((uint64_t)system::io::pic::idtTable);
+    tmscreen.print("\n");
+    tmscreen.print((uint64_t)system::io::pic::idtTableDescriptor.addr);
+    tmscreen.print("\n");
+    tmscreen.print((uint64_t)system::io::pic::idtTableDescriptor.length);
+    tmscreen.print("\n");
     tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
 
     tmscreen.print("Usable pages: ");
-    tmscreen.print(globalMemoryDescriptor.usablePages);
+    tmscreen.print((unsigned long long)globalMemoryDescriptor.usablePages);
     tmscreen.print("\n");
 
     for (int i = 0; i < globalMemoryDescriptor.memoryDescriptorsCount; i++)
     {
         tmscreen.print("Start: ");
-        tmscreen.print((unsigned long)globalMemoryDescriptor.memoryDescriptors[i].address);
+        tmscreen.print((unsigned long long)globalMemoryDescriptor.memoryDescriptors[i].address);
         tmscreen.print(" Length: ");
-        tmscreen.print(globalMemoryDescriptor.memoryDescriptors[i].length);
+        tmscreen.print((long long)globalMemoryDescriptor.memoryDescriptors[i].length);
         tmscreen.print("\n");
     }
 
@@ -82,19 +129,30 @@ extern "C" void kernelMain(void)
     }
 
     tmscreen.print("Allocate a page at: ");
-    tmscreen.print((unsigned long)onePage);
+    tmscreen.print((unsigned long long)onePage);
     tmscreen.print("\n");
 
     for (int i = 0; i < 100; i++)
     {
-        tmscreen.print(onePage[i]);
+        tmscreen.print((long long)onePage[i]);
         tmscreen.print(" ");
     }
+    tmscreen.print("\n");
 
     freePages(onePage);
 
-    asm("hlt");
-    // while (true)
-    // {
-    // }
+    int a = 2333, b;
+    asm("movl %2, %1;\
+         movl $6665, %0;\
+         inc %0;"
+        : "=r"(b), "=r"(a)
+        : "r"(a));
+    tmscreen.print((long long)a);
+    tmscreen.print("\n");
+    tmscreen.print((long long)b);
+    tmscreen.print("\n");
+
+    while (true)
+    {
+    }
 }

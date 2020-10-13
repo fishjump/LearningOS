@@ -41,25 +41,30 @@ Get more paging information via: https://wiki.osdev.org/Paging
 
 ## TODO
 - [x] bootloader
-- [ ] system 
-  - [x] boot
-    - [x] BootInfo
-  - [ ] io
-    - [ ] Screen
-      - [x] drawPixel
-      - [x] drawChar
-      - [ ] frame buffer
-      - [ ] print
-      - [ ] change screen mode
-    - [ ] Keyborad
-  - [ ] memory
-    - [ ] malloc
-    - [ ] free
-  - [x] media
-    - [x] Color
-    - [x] Font 
+- [ ] kernel
+  - [x] std
+    - [x] type
+  - [ ] system 
+    - [x] boot
+      - [x] BootInfo
+    - [ ] io
+      - [x] screen
+      - [x] text_mode_screen
+      - [ ] pic
+      - [ ] keyborad
+    - [ ] memory
+      - [x] memory
+      - [x] allocPage
+      - [x] freePage
+    - [ ] media
+      - [x] color
+      - [x] font 
+
 
 ## Update Log
+2020/10/13:
+  Partially finished pic. Now we can answer keyboard message. Renamed some symbols. Deleted IDT_Table from `head.asm`, instead `idtTable` is defined at `system::io::pic`. Added std type, like uint8_t, uint16_t, etc.
+
 2020/10/9:
   What an awesome change! I replaced cmake with msbuild, and separated the project to many cpp source files. Thus, we can complie object files respectively. Then I re-organized file structure, it's more clear now.
 

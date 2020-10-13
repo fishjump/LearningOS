@@ -1,7 +1,7 @@
 #pragma once
 
-#define VIRTUAL_TO_PHYICAL_ADDR(addr) ((addr)-system::memory::KERNEL_ADDR_BASE)
-#define PHYICAL_TO_VIRTUAL_ADDR(addr) ((addr) + system::memory::KERNEL_ADDR_BASE)
+#define VIRTUAL_TO_PHYICAL_ADDR(addr) ((addr) - (system::memory::KERNEL_ADDR_BASE))
+#define PHYICAL_TO_VIRTUAL_ADDR(addr) ((addr) + (system::memory::KERNEL_ADDR_BASE))
 
 namespace system
 {
@@ -34,16 +34,16 @@ namespace system
         const unsigned long PAGE_4K_MASK = ~(PAGE_4K_SIZE - 1);
         const unsigned long PAGE_MASK = PAGE_2M_MASK;
 
-        void *VirtualToPhyicalAddr(void *addr);
+        void *virtualToPhyicalAddr(void *addr);
 
-        void *PhyicalToVirtualAddr(void *addr);
+        void *phyicalToVirtualAddr(void *addr);
 
-        void *Page1gAlign(void *addr);
+        void *page1gAlign(void *addr);
 
-        void *Page2mAlign(void *addr);
-        void *Page4kAlign(void *addr);
+        void *page2mAlign(void *addr);
+        void *page4kAlign(void *addr);
 
-        void *PageAlign(void *addr);
+        void *pageAlign(void *addr);
 
         void initMemory();
         void *allocatePages(unsigned count);
