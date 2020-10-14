@@ -2,26 +2,22 @@
 
 #include <system/media/color.hpp>
 
-namespace system
+namespace system::io
 {
-    namespace io
+    class Screen
     {
-        class Screen
-        {
-        public:
-            Screen();
-            ~Screen();
+    public:
+        Screen();
+        ~Screen();
 
-            const int *graphicMemory;
-            const unsigned height;
-            const unsigned width;
+        const int *graphicMemory;
+        const unsigned height;
+        const unsigned width;
 
-            static Screen *getInstance();
+        static Screen *getInstance();
 
-            void drawPixel(unsigned x, unsigned y, system::media::Color color);
-            void drawChar(unsigned x, unsigned y, system::media::Color color, char ch);
-        }; // class screen
+        void drawPixel(unsigned x, unsigned y, system::media::Color color);
+        void drawChar(unsigned x, unsigned y, system::media::Color color, char ch);
+    }; // class screen
 
-    } // namespace io
-
-} // namespace system
+} // namespace system::io

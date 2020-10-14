@@ -1,8 +1,8 @@
 #pragma once
 
-#include <system/media.hpp>
-
 #include "../Screen.hpp"
+
+#include <system/media.hpp>
 
 void system::io::Screen::drawPixel(unsigned x, unsigned y, system::media::Color color)
 {

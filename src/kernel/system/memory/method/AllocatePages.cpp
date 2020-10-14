@@ -1,8 +1,8 @@
 #pragma once
 
-#include <system/memory.hpp>
-
 #include "../memory.hpp"
+
+#include <system/memory/global_memory.hpp>
 
 void *system::memory::allocatePages(unsigned count)
 {

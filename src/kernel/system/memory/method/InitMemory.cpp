@@ -1,9 +1,9 @@
 #pragma once
 
-#include <system/boot.hpp>
-#include <system/memory.hpp>
-
 #include "../memory.hpp"
+
+#include <system/boot.hpp>
+#include <system/memory/global_memory.hpp>
 
 void system::memory::initMemory()
 {

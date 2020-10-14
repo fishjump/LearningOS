@@ -2,27 +2,23 @@
 
 #include <system/io/screen.hpp>
 
-namespace system
+namespace system::io
 {
-    namespace io
+    class TextModeScreen : public Screen
     {
-        class TextModeScreen : public Screen
-        {
-        public:
-            TextModeScreen();
-            ~TextModeScreen();
+    public:
+        TextModeScreen();
+        ~TextModeScreen();
 
-            const int row;
-            const int column;
+        const int row;
+        const int column;
 
-            TextModeScreen *print(const char *content);
-            TextModeScreen *print(long long content);
-            TextModeScreen *print(unsigned long long content);
+        TextModeScreen *print(const char *content);
+        TextModeScreen *print(long long content);
+        TextModeScreen *print(unsigned long long content);
 
-        private:
-            int cursor = 0;
-        };
+    private:
+        int cursor = 0;
+    };
 
-    } // namespace io
-
-} // namespace system
+} // namespace system::io

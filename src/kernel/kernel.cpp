@@ -1,7 +1,4 @@
-#include <system/boot.hpp>
-#include <system/io.hpp>
-#include <system/media.hpp>
-#include <system/memory.hpp>
+#include <system.hpp>
 
 bool flag = true;
 int keydown = 0;
@@ -84,28 +81,27 @@ __attribute__((interrupt)) void printLogo(struct interrupt_frame *frame)
         }
     }
 
-    unsigned char scan_code = system::io::pic::readBtye(0x60);
+    unsigned char scan_code = system::io::port::readBtye(0x60);
 
-    system::io::pic::writeBtye(0x20, 0x20);
+    system::io::port::writeBtye(0x20, 0x20);
 
     asm("sti");
 }
 
 extern "C" void kernelMain(void)
 {
-    system::io::pic::initPic();
+    system::interrupt::pic::initPic();
     system::memory::initMemory();
     for (int i = 0x00; i < 0x2f; i++)
     {
-        system::io::pic::idtTable[i].setHandler((uint64_t)printLogo);
+        system::interrupt::pic::idtTable[i].setHandler((uint64_t)printLogo);
     }
     TextModeScreen tmscreen;
-    extern system::io::pic::IdtTableDescriptor IDT_POINTER;
-    tmscreen.print((uint64_t)system::io::pic::idtTable);
+    tmscreen.print((uint64_t)system::interrupt::pic::idtTable);
     tmscreen.print("\n");
-    tmscreen.print((uint64_t)system::io::pic::idtTableDescriptor.addr);
+    tmscreen.print((uint64_t)system::interrupt::pic::idtTableDescriptor.addr);
     tmscreen.print("\n");
-    tmscreen.print((uint64_t)system::io::pic::idtTableDescriptor.length);
+    tmscreen.print((uint64_t)system::interrupt::pic::idtTableDescriptor.length);
     tmscreen.print("\n");
     tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
 

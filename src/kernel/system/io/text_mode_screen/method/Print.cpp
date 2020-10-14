@@ -1,8 +1,8 @@
 #pragma once
 
-#include <system/media.hpp>
-
 #include "../TextModeScreen.hpp"
+
+#include <system/media.hpp>
 
 system::io::TextModeScreen *system::io::TextModeScreen::print(const char *content)
 {

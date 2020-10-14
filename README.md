@@ -62,6 +62,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
 
 
 ## Update Log
+2020/10/14:
+  Cleaned up my codes. Split `system::io::pic` to `system::io::port` and `system::interrupt::pic`.
+
 2020/10/13:
   Partially finished pic. Now we can answer keyboard message. Renamed some symbols. Deleted IDT_Table from `head.asm`, instead `idtTable` is defined at `system::io::pic`. Added std type, like uint8_t, uint16_t, etc.
 

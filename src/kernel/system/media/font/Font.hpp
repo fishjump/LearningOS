@@ -1,29 +1,25 @@
 #pragma once
 
-namespace system
+namespace system::media
 {
-	namespace media
+	class Font
 	{
-		class Font
-		{
-		public:
-			Font(const char &fontCode);
-			~Font();
+	public:
+		Font(const char &fontCode);
+		~Font();
 
-			static const unsigned fontCount = 256;
-			static const unsigned fontHeight = 16;
-			static const unsigned fontWidth = 8; // unsigned char = fontWidth = 8bits
+		static const unsigned fontCount = 256;
+		static const unsigned fontHeight = 16;
+		static const unsigned fontWidth = 8; // unsigned char = fontWidth = 8bits
 
-			using FontTable = const unsigned char[fontCount][fontHeight];
-			using FontRows = const unsigned char *;
+		using FontTable = const unsigned char[fontCount][fontHeight];
+		using FontRows = const unsigned char *;
 
-			FontRows getFontRows() const;
+		FontRows getFontRows() const;
 
-		private:
-			static const FontTable fontTable;
-			char fontCode;
-		}; // class Font
+	private:
+		static const FontTable fontTable;
+		char fontCode;
+	}; // class Font
 
-	} // namespace media
-
-} // namespace system
+} // namespace system::media

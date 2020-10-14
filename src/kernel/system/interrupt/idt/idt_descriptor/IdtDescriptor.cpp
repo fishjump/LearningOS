@@ -1,8 +1,8 @@
-#include <std/type.hpp>
-
 #include "IdtDescriptor.hpp"
 
-void system::io::pic::IdtDescriptor::setHandler(uint64_t handler)
+#include <std/type.hpp>
+
+void system::interrupt::idt::IdtDescriptor::setHandler(uint64_t handler)
 {
     uint64_t address = (uint64_t)handler;
     selector = 0x08;
