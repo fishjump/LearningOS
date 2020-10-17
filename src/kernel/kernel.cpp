@@ -1,17 +1,8 @@
 #include <system.hpp>
 
-bool flag = true;
-int keydown = 0;
 using namespace system::io;
 using namespace system::media;
 using namespace system::memory;
-
-struct interrupt_frame
-{
-    uint32_t eip;
-    uint32_t cs;
-    uint32_t eflags;
-};
 
 void clear()
 {
@@ -26,19 +17,8 @@ void clear()
     }
 }
 
-__attribute__((interrupt)) void printLogo(struct interrupt_frame *frame)
+void printLogo()
 {
-    asm("cli");
-    if (flag)
-    {
-        clear();
-        flag = false;
-    }
-    keydown++;
-    TextModeScreen tmscreen;
-    tmscreen.print("Keydown: ");
-    tmscreen.print((unsigned long long)keydown);
-
     // 1360 * 768
     // so, red : x:[595, 674] y:[299, 378]  green:  x:[685, 764] y:[299, 378]
     //     blue: x:[595, 674] y:[389, 468]  yellow: x:[685, 764] y:[389, 468]
@@ -80,73 +60,68 @@ __attribute__((interrupt)) void printLogo(struct interrupt_frame *frame)
             screen.drawPixel(x, y, ms_yellow);
         }
     }
-
-    unsigned char scan_code = system::io::port::readBtye(0x60);
-
-    system::io::port::writeBtye(0x20, 0x20);
-
-    asm("sti");
 }
 
 extern "C" void kernelMain(void)
 {
+    system::interrupt::idt::initIdt();
     system::interrupt::pic::initPic();
     system::memory::initMemory();
-    for (int i = 0x00; i < 0x2f; i++)
-    {
-        system::interrupt::pic::idtTable[i].setHandler((uint64_t)printLogo);
-    }
-    TextModeScreen tmscreen;
-    tmscreen.print((uint64_t)system::interrupt::pic::idtTable);
-    tmscreen.print("\n");
-    tmscreen.print((uint64_t)system::interrupt::pic::idtTableDescriptor.addr);
-    tmscreen.print("\n");
-    tmscreen.print((uint64_t)system::interrupt::pic::idtTableDescriptor.length);
-    tmscreen.print("\n");
-    tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
+    system::io::Screen::initGobalInstance();
+    system::io::TextModeScreen::initGobalInstance();
 
-    tmscreen.print("Usable pages: ");
-    tmscreen.print((unsigned long long)globalMemoryDescriptor.usablePages);
-    tmscreen.print("\n");
+    printLogo();
+    // TextModeScreen tmscreen;
+    // tmscreen.print((uint64_t)system::interrupt::idt::idtTable);
+    // tmscreen.print("\n");
+    // tmscreen.print((uint64_t)system::interrupt::idt::idtTableDescriptor.addr);
+    // tmscreen.print("\n");
+    // tmscreen.print((uint64_t)system::interrupt::idt::idtTableDescriptor.length);
+    // tmscreen.print("\n");
+    // tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
 
-    for (int i = 0; i < globalMemoryDescriptor.memoryDescriptorsCount; i++)
-    {
-        tmscreen.print("Start: ");
-        tmscreen.print((unsigned long long)globalMemoryDescriptor.memoryDescriptors[i].address);
-        tmscreen.print(" Length: ");
-        tmscreen.print((long long)globalMemoryDescriptor.memoryDescriptors[i].length);
-        tmscreen.print("\n");
-    }
+    // tmscreen.print("Usable pages: ");
+    // tmscreen.print((unsigned long long)globalMemoryDescriptor.usablePages);
+    // tmscreen.print("\n");
 
-    int *onePage = (int *)system::memory::allocatePages(1);
-    for (int i = 0; i < 100; i++)
-    {
-        onePage[i] = i;
-    }
+    // for (int i = 0; i < globalMemoryDescriptor.memoryDescriptorsCount; i++)
+    // {
+    //     tmscreen.print("Start: ");
+    //     tmscreen.print((unsigned long long)globalMemoryDescriptor.memoryDescriptors[i].address);
+    //     tmscreen.print(" Length: ");
+    //     tmscreen.print((long long)globalMemoryDescriptor.memoryDescriptors[i].length);
+    //     tmscreen.print("\n");
+    // }
 
-    tmscreen.print("Allocate a page at: ");
-    tmscreen.print((unsigned long long)onePage);
-    tmscreen.print("\n");
+    // int *onePage = (int *)system::memory::allocatePages(1);
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     onePage[i] = i;
+    // }
 
-    for (int i = 0; i < 100; i++)
-    {
-        tmscreen.print((long long)onePage[i]);
-        tmscreen.print(" ");
-    }
-    tmscreen.print("\n");
+    // tmscreen.print("Allocate a page at: ");
+    // tmscreen.print((unsigned long long)onePage);
+    // tmscreen.print("\n");
 
-    freePages(onePage);
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     tmscreen.print((long long)onePage[i]);
+    //     tmscreen.print(" ");
+    // }
+    // tmscreen.print("\n");
 
-    int a = 2333, b;
-    asm("movl %2, %1;\
-         movl $6665, %0;\
-         inc %0;"
-        : "=r"(b), "=r"(a)
-        : "r"(a));
-    tmscreen.print((long long)a);
-    tmscreen.print("\n");
-    tmscreen.print((long long)b);
-    tmscreen.print("\n");
+    // freePages(onePage);
+
+    // int a = 2333, b;
+    // asm volatile("movl %2, %1;\
+    //      movl $6665, %0;\
+    //      inc %0;"
+    //              : "=r"(b), "=r"(a)
+    //              : "r"(a));
+    // tmscreen.print((long long)a);
+    // tmscreen.print("\n");
+    // tmscreen.print((long long)b);
+    // tmscreen.print("\n");
 
     while (true)
     {

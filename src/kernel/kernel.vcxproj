@@ -36,7 +36,7 @@
     <!-- Flags -->
     <PropertyGroup>
         <AsmFlags>--64</AsmFlags>
-        <CxxFlags>-std=c++17 -I $(SourcePath) -fno-stack-protector -mcmodel=large -fno-builtin -fno-exceptions -m64  -mgeneral-regs-only</CxxFlags>
+        <CxxFlags>-std=c++17 -I $(SourcePath) -fno-stack-protector -mcmodel=large -fno-builtin -fno-exceptions -m64 -mgeneral-regs-only -fno-use-cxa-atexit -fno-threadsafe-statics</CxxFlags>
         <LdFlags>-T $(LinkScriptFile) -b elf64-x86-64</LdFlags>
         <ObjCpFlags>-I elf64-x86-64 -S -R .eh_frame -R .comment -O binary</ObjCpFlags>
     </PropertyGroup>

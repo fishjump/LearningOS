@@ -62,6 +62,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
 
 
 ## Update Log
+2020/10/15:
+  Update IRQs.
+
 2020/10/14:
   Cleaned up my codes. Split `system::io::pic` to `system::io::port` and `system::interrupt::pic`.
 

@@ -25,6 +25,3 @@ void system::interrupt::pic::initPic()
     system::io::port::writeBtye(system::io::port::pic::PIC0_IMR, 0b11111101);
     system::io::port::writeBtye(system::io::port::pic::PIC1_IMR, 0b11111111);
 }
-
-system::interrupt::idt::IdtDescriptor system::interrupt::pic::idtTable[system::interrupt::pic::MAX_INT_NUMBER] = {0};
-const system::interrupt::idt::IdtTableDescriptor system::interrupt::pic::idtTableDescriptor = {sizeof(system::interrupt::pic::idtTable) * 8 - 1, (uint64_t)system::interrupt::pic::idtTable};

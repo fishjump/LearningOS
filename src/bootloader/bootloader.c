@@ -26,7 +26,7 @@ struct MemoryDescriptor
 struct MemoryInfo
 {
 	unsigned int count;
-	struct MemoryDescriptor descriptors[0];
+	struct MemoryDescriptor descriptors[];
 };
 
 struct BootInfo

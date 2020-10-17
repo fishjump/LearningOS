@@ -1,6 +1,7 @@
 #pragma once
 
 #include <std/type.hpp>
+#include <system/interrupt/idt/idt_descriptor_type.hpp>
 
 namespace system::interrupt::idt
 {
@@ -14,7 +15,7 @@ namespace system::interrupt::idt
         uint16_t handlerOffset2; // offset bits 16..31
         uint32_t handlerOffset3; // offset bits 32..63
         uint32_t reserved;       // reserved
-        void setHandler(uint64_t handler);
+        void setHandler(uint64_t handler, uint16_t gdtSelector, system::interrupt::idt::IdtDescriptorType type, uint8_t privilege = 0b11);
     } __attribute__((packed));
 
 } // namespace system::interrupt::idt

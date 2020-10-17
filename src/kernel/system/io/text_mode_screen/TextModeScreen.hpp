@@ -10,12 +10,15 @@ namespace system::io
         TextModeScreen();
         ~TextModeScreen();
 
-        const int row;
-        const int column;
+        int row;
+        int column;
 
         TextModeScreen *print(const char *content);
         TextModeScreen *print(long long content);
         TextModeScreen *print(unsigned long long content);
+
+        static void initGobalInstance();
+        static TextModeScreen &getGobalInstance();
 
     private:
         int cursor = 0;

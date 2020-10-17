@@ -25,7 +25,7 @@ namespace system::boot
     {
     public:
         const unsigned int count;
-        const MemoryDescriptor descriptors[0];
+        const MemoryDescriptor descriptors[];
     };
 
     class BootInfo
