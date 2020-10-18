@@ -71,59 +71,9 @@ extern "C" void kernelMain(void)
     system::io::TextModeScreen::initGobalInstance();
 
     printLogo();
-    // TextModeScreen tmscreen;
-    // tmscreen.print((uint64_t)system::interrupt::idt::idtTable);
-    // tmscreen.print("\n");
-    // tmscreen.print((uint64_t)system::interrupt::idt::idtTableDescriptor.addr);
-    // tmscreen.print("\n");
-    // tmscreen.print((uint64_t)system::interrupt::idt::idtTableDescriptor.length);
-    // tmscreen.print("\n");
-    // tmscreen.print("Hello LearningOS!\nThis is a print test =w=\n");
-
-    // tmscreen.print("Usable pages: ");
-    // tmscreen.print((unsigned long long)globalMemoryDescriptor.usablePages);
-    // tmscreen.print("\n");
-
-    // for (int i = 0; i < globalMemoryDescriptor.memoryDescriptorsCount; i++)
-    // {
-    //     tmscreen.print("Start: ");
-    //     tmscreen.print((unsigned long long)globalMemoryDescriptor.memoryDescriptors[i].address);
-    //     tmscreen.print(" Length: ");
-    //     tmscreen.print((long long)globalMemoryDescriptor.memoryDescriptors[i].length);
-    //     tmscreen.print("\n");
-    // }
-
-    // int *onePage = (int *)system::memory::allocatePages(1);
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     onePage[i] = i;
-    // }
-
-    // tmscreen.print("Allocate a page at: ");
-    // tmscreen.print((unsigned long long)onePage);
-    // tmscreen.print("\n");
-
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     tmscreen.print((long long)onePage[i]);
-    //     tmscreen.print(" ");
-    // }
-    // tmscreen.print("\n");
-
-    // freePages(onePage);
-
-    // int a = 2333, b;
-    // asm volatile("movl %2, %1;\
-    //      movl $6665, %0;\
-    //      inc %0;"
-    //              : "=r"(b), "=r"(a)
-    //              : "r"(a));
-    // tmscreen.print((long long)a);
-    // tmscreen.print("\n");
-    // tmscreen.print((long long)b);
-    // tmscreen.print("\n");
 
     while (true)
     {
+        system::io::TextModeScreen::getGobalInstance().fresh();
     }
 }

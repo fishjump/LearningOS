@@ -62,6 +62,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
 
 
 ## Update Log
+2020/10/18:
+  Update `Screen` and `TextModeScreen`, add buffer for `TextModeScreen`.
+
 2020/10/15:
   Update IRQs.
 

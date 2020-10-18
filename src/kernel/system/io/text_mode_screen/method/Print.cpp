@@ -9,24 +9,8 @@ system::io::TextModeScreen *system::io::TextModeScreen::print(const char *conten
     int i = 0;
     while (content[i] != '\0')
     {
-        if (cursor >= height * width)
-        {
-            break;
-        }
-        int x = (cursor % width) * system::media::Font::fontWidth;
-        int y = (cursor / width) * system::media::Font::fontHeight;
-        switch (content[i])
-        {
-        case '\n':
-            cursor += width - cursor % width;
-            break;
-
-        default:
-            drawChar(x, y, system::media::common_color::white, content[i]);
-            cursor++;
-            break;
-        }
-
+        buffer[bufferCount] = content[i];
+        bufferCount++;
         i++;
     }
 

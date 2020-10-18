@@ -16,7 +16,8 @@ namespace system::io
 
         void drawPixel(unsigned x, unsigned y, system::media::Color color);
         void drawChar(unsigned x, unsigned y, system::media::Color color, char ch);
-
+        void clear();
+        
         static void initGobalInstance();
         static Screen& getGobalInstance();
     }; // class screen
