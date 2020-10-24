@@ -62,6 +62,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
 
 
 ## Update Log
+2020/10/24:
+  We can see what we type on screen, awesome! However, this keyboard driver does not support some key now.  
+
 2020/10/18:
   Update `Screen` and `TextModeScreen`, add buffer for `TextModeScreen`.
 

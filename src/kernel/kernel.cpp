@@ -1,4 +1,5 @@
 #include <system.hpp>
+#include <application/shell.hpp>
 
 using namespace system::io;
 using namespace system::media;
@@ -69,11 +70,16 @@ extern "C" void kernelMain(void)
     system::memory::initMemory();
     system::io::Screen::initGobalInstance();
     system::io::TextModeScreen::initGobalInstance();
+    system::io::Keyboard::initGobalInstance();
 
+    system::io::Screen::getGobalInstance().clear();
     printLogo();
 
+    application::Shell shell;
     while (true)
     {
+        shell.getInput();
         system::io::TextModeScreen::getGobalInstance().fresh();
+        asm("hlt");
     }
 }
