@@ -2,7 +2,7 @@
 
 #include <system/io.hpp>
 
-__attribute__((interrupt)) void system::interrupt::irq::irq0x21(interrupt_frame *frame)
+void system::interrupt::irq::irq0x21(interrupt_frame *frame)
 {
     system::io::TextModeScreen &tm = system::io::TextModeScreen::getGobalInstance();
     system::io::Keyboard &keyboard = system::io::Keyboard::getGobalInstance();

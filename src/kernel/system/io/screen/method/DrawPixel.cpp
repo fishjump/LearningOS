@@ -2,13 +2,17 @@
 
 #include "../Screen.hpp"
 
+#include <std/type.hpp>
 #include <system/media.hpp>
 
-void system::io::Screen::drawPixel(unsigned x, unsigned y, system::media::Color color)
+void system::io::Screen::drawPixel(uint32_t x, uint32_t y, system::media::Color color)
 {
     if (0 <= x && x < width && 0 <= y && y < height)
     {
-        int *addr = (int *)graphicMemory + y * width + x;
+        size_t padding = (pixelsPerScanLine - width);
+        size_t leftPadding = padding / 2;
+        size_t rightPadding = padding - leftPadding;
+        uint32_t *addr = (uint32_t *)graphicMemory + (y + padding) * width + x + leftPadding;
         *addr = color.getColor();
     }
 }
