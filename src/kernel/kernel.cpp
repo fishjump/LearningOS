@@ -1,5 +1,5 @@
-#include <system.hpp>
 #include <application/shell.hpp>
+#include <system.hpp>
 
 using namespace system::io;
 using namespace system::media;
@@ -29,34 +29,30 @@ void printLogo()
     Color ms_yellow = 0xf8b619;
 
     Screen screen;
-
-    for (int x = 595; x <= 674; x++)
+    for (int y = 299; y <= 378; y++)
     {
-        for (int y = 299; y <= 378; y++)
+        for (int x = 595; x <= 674; x++)
         {
             screen.drawPixel(x, y, ms_red);
         }
     }
-
-    for (int x = 685; x <= 764; x++)
+    for (int y = 299; y <= 378; y++)
     {
-        for (int y = 299; y <= 378; y++)
+        for (int x = 685; x <= 764; x++)
         {
             screen.drawPixel(x, y, ms_green);
         }
     }
-
-    for (int x = 595; x <= 674; x++)
+    for (int y = 389; y <= 468; y++)
     {
-        for (int y = 389; y <= 468; y++)
+        for (int x = 595; x <= 674; x++)
         {
             screen.drawPixel(x, y, ms_blue);
         }
     }
-
-    for (int x = 685; x <= 764; x++)
+    for (int y = 389; y <= 468; y++)
     {
-        for (int y = 389; y <= 468; y++)
+        for (int x = 685; x <= 764; x++)
         {
             screen.drawPixel(x, y, ms_yellow);
         }
@@ -72,8 +68,13 @@ extern "C" void kernelMain(void)
     system::io::TextModeScreen::initGobalInstance();
     system::io::Keyboard::initGobalInstance();
 
-    system::io::Screen::getGobalInstance().clear();
-    printLogo();
+    auto &tmScreen = system::io::TextModeScreen::getGobalInstance();
+    auto &screen = tmScreen;
+
+    tmScreen.print("VerticalResolution:")->print((uint64_t)system::boot::bootInfo->graphicInfo.VerticalResolution)->print("\n");
+    tmScreen.print("HorizontalResolution:")->print((uint64_t)system::boot::bootInfo->graphicInfo.HorizontalResolution)->print("\n");
+    tmScreen.print("PixelsPerScanLine:")->print((uint64_t)system::boot::bootInfo->graphicInfo.PixelsPerScanLine)->print("\n");
+    tmScreen.print((uint64_t)screen.width);
 
     application::Shell shell;
     while (true)

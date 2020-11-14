@@ -62,6 +62,9 @@ Get more paging information via: https://wiki.osdev.org/Paging
 
 
 ## Update Log
+2020/11/14:
+  move gdt to kernel/system/memory/gdt/gdt.hpp.
+
 2020/10/24:
   We can see what we type on screen, awesome! However, this keyboard driver does not support some key now.  
 

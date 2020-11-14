@@ -66,6 +66,8 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 	bootInfo->graphicInfo.verticalResolution = graphicsOutputProtocol->Mode->Info->VerticalResolution;
 	bootInfo->graphicInfo.pixelsPerScanLine = graphicsOutputProtocol->Mode->Info->PixelsPerScanLine;
 
+	Print(L"Graphic resolution: %d*%d\n", bootInfo->graphicInfo.horizontalResolution, bootInfo->graphicInfo.verticalResolution);
+	Print(L"Graphic memory: %018lx\n", bootInfo->graphicInfo.frameBufferBase);
 	closeGraphicOutputProtocol(graphicsOutputProtocol, ImageHandle);
 
 	// init memory map
@@ -158,7 +160,7 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable
 			}
 		}
 	}
-
+	Print(L"Jumping to kernel\n");
 	// exit boot services
 	status = exitBootServices(ImageHandle, mapKey);
 

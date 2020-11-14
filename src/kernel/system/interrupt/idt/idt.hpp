@@ -6,9 +6,9 @@
 
 namespace system::interrupt::idt
 {
-    const uint16_t MAX_INT_NUMBER = 256;
+    const size_t MAX_INTERRUPT_NUMBER = 256;
 
-    extern "C" IdtDescriptor idtTable[MAX_INT_NUMBER];
+    extern "C" IdtDescriptor idtTable[MAX_INTERRUPT_NUMBER];
     extern "C" const IdtTableDescriptor idtTableDescriptor;
 
     void initIdt();

@@ -3,25 +3,22 @@
 #include <system/boot.hpp>
 #include <system/memory/memory_descriptor.hpp>
 
-namespace system
+namespace system::memory
 {
-    namespace memory
+
+    // Assume we only have 2 GB physical memory with 2MB page size
+    class GlobalMemoryDescriptor
     {
-        // Assume we only have 2 GB physical memory with 2MB page size
-        class GlobalMemoryDescriptor
-        {
-        public:
-            static const unsigned MEMORY_DESCRIPTORS_COUNT_MAX = 1024;
+    public:
+        static const unsigned MEMORY_DESCRIPTORS_COUNT_MAX = 1024;
 
-            MemoryDescriptor memoryDescriptors[MEMORY_DESCRIPTORS_COUNT_MAX];
-            unsigned long memoryDescriptorsCount;
+        MemoryDescriptor memoryDescriptors[MEMORY_DESCRIPTORS_COUNT_MAX];
+        unsigned long memoryDescriptorsCount;
 
-            unsigned long usableMemory;
-            unsigned int usablePages;
-        };
+        unsigned long usableMemory;
+        unsigned int usablePages;
+    };
 
-        extern GlobalMemoryDescriptor globalMemoryDescriptor;
+    extern GlobalMemoryDescriptor globalMemoryDescriptor;
 
-    } // namespace memory
-
-} // namespace system
+} // namespace system::memory
