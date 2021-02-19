@@ -1,38 +1,46 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="check-env" DefaultTargets="build" ToolsVersion="16.0">
 
     <!-- Project -->
+    <!-- Defined in parent project file, overwrite if need -->
     <PropertyGroup Condition="false">
-        <BuildPath></BuildPath>
-        <SourcePath></SourcePath>
-        <OutputPath></OutputPath>
-        <GCC></GCC>
-        <GXX></GXX>
-        <LD></LD>
+        <!-- <BuildPath></BuildPath> -->
+        <!-- <SourcePath></SourcePath> -->
+        <!-- <IncludePath></IncludePath> -->
+        <!-- <OutputPath></OutputPath> -->
+        <!-- <GCC></GCC> -->
+        <!-- <GXX></GXX> -->
+        <!-- <LD></LD> -->
     </PropertyGroup>
+
+    <!-- Include -->
+    <ItemGroup>
+        <Include Include="$(IncludePath)"/>
+        <Include Include="$(IncludePath)/efi"/>
+        <Include Include="$(IncludePath)/efi/x86_64"/>
+    </ItemGroup>
 
     <!-- Libs -->
     <ItemGroup>
-        <Lib Include="$(SourcePath)/lib/crt0-efi-x86_64.o" />
-        <Lib Include="$(SourcePath)/lib/libgnuefi.a" />
-        <Lib Include="$(SourcePath)/lib/libefi.a" />
+        <Lib Include="$(LibPath)/crt0-efi-x86_64.o" />
+        <Lib Include="$(LibPath)/libgnuefi.a" />
+        <Lib Include="$(LibPath)/libefi.a" />
     </ItemGroup>
 
+    <!-- Sources -->
     <ItemGroup>
-        <EfiHeader Include="$(SourcePath)/include/efi"/>
-        <EfiHeader Include="$(SourcePath)/include/efi/x86_64"/>
+        <Source Include="$(SourcePath)/bootloader.c"/>
     </ItemGroup>
 
     <!-- Files -->
     <PropertyGroup>
-        <LinkScriptFile>$(SourcePath)/elf_x86_64_efi.lds</LinkScriptFile>
-        <SourceFile>$(SourcePath)/bootloader.c</SourceFile>
+        <LinkScriptFile>$(SourcePath)/../elf_x86_64_efi.lds</LinkScriptFile>
         <ObjectFile>$(BuildPath)/bootloader.o</ObjectFile>
         <SharedObjectFile>$(BuildPath)/bootloader.so</SharedObjectFile>
     </PropertyGroup>
 
     <!-- Flags -->
     <PropertyGroup>
-        <CFlags>-std=c11 @(EfiHeader -> '-I %(Identity)', ' ')  -fshort-wchar -fpic -ffreestanding</CFlags>
+        <CFlags>-std=c11 @(Include -> '-I %(Identity)', ' ')  -fshort-wchar -fpic -ffreestanding</CFlags>
         <LdFlags>-nostdlib -T $(LinkScriptFile) -shared -Bsymbolic</LdFlags>
         <ObjCpFlags>-j .text -j .sdata -j .data -j .dynamic -j .dynsym -j .rel -j .rela  -j .reloc -O efi-app-x86_64</ObjCpFlags>
     </PropertyGroup>
@@ -47,7 +55,7 @@
     <!-- Targets -->
     <Target Name="build">
         <Message Text="Building $(MSBuildProjectName)." />
-        <Exec Command="$(GCC) -c $(SourceFile) -o $(ObjectFile) $(CFlags)" EchoOff="true" />
+        <Exec Command="$(GCC) -c @(Source, ' ') -o $(ObjectFile) $(CFlags)" EchoOff="true" />
         <Exec Command="$(LD) $(ObjectFile) @(Lib, ' ') -o $(SharedObjectFile) $(LdFlags)" EchoOff="true" />
         <Exec Command="objcopy $(SharedObjectFile) $(OutputPath) $(ObjCpFlags)" EchoOff="true" />
     </Target>

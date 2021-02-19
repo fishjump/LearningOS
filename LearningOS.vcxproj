@@ -62,7 +62,9 @@
         <Subproject Include="bootloader;kernel" KeepMetadata="@(SubprojectMetadataName)">
             <ProjectPath>$(SourcePath)/%(Identity)/%(Identity).vcxproj</ProjectPath>
             <BuildPath>$(BuildPath)/%(Identity)</BuildPath>
-            <SourcePath>$(SourcePath)/%(Identity)</SourcePath>
+            <IncludePath>$(SourcePath)/%(Identity)/include</IncludePath>
+            <LibPath>$(SourcePath)/%(Identity)/lib</LibPath>
+            <SourcePath>$(SourcePath)/%(Identity)/src</SourcePath>
             <GCC>$(GCC)</GCC>
             <GXX>$(GXX)</GXX>
             <LD>$(LD)</LD>

@@ -1,24 +1,38 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="check-env" DefaultTargets="build" ToolsVersion="16.0">
 
     <!-- Project -->
+    <!-- Defined in parent project file, overwrite if need -->
     <PropertyGroup Condition="false">
-        <BuildPath></BuildPath>
-        <SourcePath></SourcePath>
-        <OutputPath></OutputPath>
-        <GCC></GCC>
-        <GXX></GXX>
-        <LD></LD>
+        <!-- <BuildPath></BuildPath> -->
+        <!-- <SourcePath></SourcePath> -->
+        <!-- <IncludePath></IncludePath> -->
+        <!-- <OutputPath></OutputPath> -->
+        <!-- <GCC></GCC> -->
+        <!-- <GXX></GXX> -->
+        <!-- <LD></LD> -->
     </PropertyGroup>
+
+    <!-- Include -->
+    <ItemGroup>
+        <Include Include="$(IncludePath)"/>
+    </ItemGroup>
 
     <!-- Libs -->
     <ItemGroup>
         <Lib Include="$(HeadObjectFile)" />
-        <Lib Include="$(KernelObjectFile)" />
+        <!-- <Lib Include="$(KernelObjectFile)" /> -->
+    </ItemGroup>
+
+    <!-- Sources -->
+    <ItemGroup>
+        <Source Include="$(SourcePath)/**/*.cpp">
+            <Object>$(BuildPath)/%(RecursiveDir)%(Filename).o</Object>
+        </Source>
     </ItemGroup>
 
     <!-- Files -->
     <PropertyGroup>
-        <LinkScriptFile>$(SourcePath)/kernel.lds</LinkScriptFile>
+        <LinkScriptFile>$(SourcePath)/../kernel.lds</LinkScriptFile>
         <KernelSourceFile>$(SourcePath)/kernel.cpp</KernelSourceFile>
         <HeadSourceFile>$(SourcePath)/head.asm</HeadSourceFile>
 
@@ -27,16 +41,10 @@
         <KernelElfFile>$(BuildPath)/kernel.elf</KernelElfFile>
     </PropertyGroup>
 
-    <ItemGroup>
-        <CxxSource Include="$(SourcePath)/**/*.cpp" Exclude="$(KernelSourceFile);$(SourcePath)/**/method/**/*.cpp">
-            <CxxObject>$(BuildPath)/%(RecursiveDir)%(Filename).o</CxxObject>
-        </CxxSource>
-    </ItemGroup>
-
     <!-- Flags -->
     <PropertyGroup>
         <AsmFlags>--64</AsmFlags>
-        <CxxFlags>-std=c++17 -I $(SourcePath) -fno-stack-protector -mcmodel=large -fno-builtin -fno-exceptions -m64 -mgeneral-regs-only -fno-use-cxa-atexit -fno-threadsafe-statics</CxxFlags>
+        <CxxFlags>-std=c++17 @(Include -> '-I %(Identity)', ' ') -fno-stack-protector -mcmodel=large -fno-builtin -fno-exceptions -m64 -mgeneral-regs-only -fno-use-cxa-atexit -fno-threadsafe-statics</CxxFlags>
         <LdFlags>-T $(LinkScriptFile) -b elf64-x86-64</LdFlags>
         <ObjCpFlags>-I elf64-x86-64 -S -R .eh_frame -R .comment -O binary</ObjCpFlags>
     </PropertyGroup>
@@ -52,10 +60,10 @@
     <!-- Targets -->
     <Target Name="build">
         <Message Text="Building $(MSBuildProjectName)." />
-        <Exec Command="$(GXX) -c $(KernelSourceFile) -o $(KernelObjectFile) $(CxxFlags)" EchoOff="true" />
-        <Exec Command="$(GXX) -c %(CxxSource.Identity) -o %(CxxSource.CxxObject) $(CxxFlags)" EchoOff="true" />
+        <!-- <Exec Command="$(GXX) -c $(KernelSourceFile) -o $(KernelObjectFile) $(CxxFlags)" EchoOff="true" /> -->
+        <Exec Command="$(GXX) -c %(Source.Identity) -o %(Source.Object) $(CxxFlags)" EchoOff="true" />
         <Exec Command="as $(HeadSourceFile) -o $(HeadObjectFile) $(AsmFlags)" EchoOff="true" />
-        <Exec Command="$(LD) @(Lib, ' ') @(CxxSource -> '%(CxxObject)', ' ') -o $(KernelElfFile) $(LdFlags)" EchoOff="true" />
+        <Exec Command="$(LD) @(Lib, ' ') @(Source -> '%(Object)', ' ') -o $(KernelElfFile) $(LdFlags)" EchoOff="true" />
         <Exec Command="objcopy $(KernelElfFile) $(OutputPath) $(ObjCpFlags)" EchoOff="true" />
     </Target>
 
@@ -66,7 +74,7 @@
 
     <Target Name="check-env">
         <MakeDir Directories="$(BuildPath)" />
-        <MakeDir Directories="@(CxxSource -> '$(BuildPath)/%(RecursiveDir)')" />
+        <MakeDir Directories="@(Source -> '$(BuildPath)/%(RecursiveDir)')" />
     </Target>
 
 </Project>
