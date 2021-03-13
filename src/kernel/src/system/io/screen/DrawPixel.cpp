@@ -1,6 +1,6 @@
 #include <system/io/screen.hpp>
 
-#include <std/type.hpp>
+#include <std/stdcxx.hpp>
 #include <system/media.hpp>
 
 void system::io::Screen::drawPixel(uint32_t x, uint32_t y, system::media::Color color)

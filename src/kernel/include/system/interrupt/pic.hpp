@@ -1,6 +1,6 @@
 #pragma once
 
-#include <std/type.hpp>
+#include <std/stdcxx.hpp>
 
 #include <system/interrupt/idt.hpp>
 

@@ -15,11 +15,13 @@
     <!-- Include -->
     <ItemGroup>
         <Include Include="$(IncludePath)"/>
+        <Include Include="$(IncludeExtPath)"/>
     </ItemGroup>
 
     <!-- Libs -->
     <ItemGroup>
         <Lib Include="$(HeadObjectFile)" />
+        <Lib Include="$(MSBuildStartupDirectory)/build/stdlibc++.o" />        
         <!-- <Lib Include="$(KernelObjectFile)" /> -->
     </ItemGroup>
 

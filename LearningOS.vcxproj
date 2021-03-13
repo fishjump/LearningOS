@@ -51,6 +51,7 @@
     <PropertyGroup>
         <BuildPath>$(MSBuildStartupDirectory)/build</BuildPath>
         <SourcePath>$(MSBuildStartupDirectory)/src</SourcePath>
+        <ModulePath>$(MSBuildStartupDirectory)/module</ModulePath>
         <OutputPath>/mnt/c/Users/z1052/</OutputPath>
         <GCC>/usr/bin/gcc</GCC>
         <GXX>/usr/bin/g++</GXX>
@@ -59,6 +60,11 @@
 
     <!-- Subprojects -->
     <ItemGroup>
+        <Subproject Include="libstdcxx">
+            <ProjectPath>$(ModulePath)/%(Identity)/%(Identity).vcxproj</ProjectPath>
+            <BuildPath>$(BuildPath)/%(Identity)</BuildPath>
+        </Subproject>
+
         <Subproject Include="bootloader;kernel" KeepMetadata="@(SubprojectMetadataName)">
             <ProjectPath>$(SourcePath)/%(Identity)/%(Identity).vcxproj</ProjectPath>
             <BuildPath>$(BuildPath)/%(Identity)</BuildPath>
@@ -75,6 +81,7 @@
         </Subproject>
 
         <Subproject Update="kernel">
+            <IncludeExtPath>$(ModulePath)/libstdcxx/include</IncludeExtPath>
             <OutputPath>%(BuildPath)/kernel.bin</OutputPath>
         </Subproject>
 
