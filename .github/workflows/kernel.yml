@@ -17,6 +17,8 @@ jobs:
       run: mkdir build_kernel
     - name: cd
       run: cd build_kernel
+    - name: init submodule
+      run: git submodule update --init
     - name: msbuild
       run: dotnet msbuild -v:n -p:OutputPath=./ -t:subproject
       
