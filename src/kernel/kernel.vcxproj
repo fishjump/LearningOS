@@ -21,7 +21,7 @@
     <!-- Libs -->
     <ItemGroup>
         <Lib Include="$(HeadObjectFile)" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/stdlibc++.o" />        
+        <Lib Include="$(MSBuildStartupDirectory)/build/libstdcxx.o" />        
         <!-- <Lib Include="$(KernelObjectFile)" /> -->
     </ItemGroup>
 
