@@ -21,11 +21,7 @@
     <!-- Libs -->
     <ItemGroup>
         <Lib Include="$(HeadObjectFile)" />
-<<<<<<< HEAD
-        <Lib Include="$(MSBuildStartupDirectory)/build/libstdcxx.o" />        
-=======
-        <Lib Include="$(MSBuildStartupDirectory)/build/stdlibcxx.o" />        
->>>>>>> a318d624545cf4e71e37f70fce1df499dd554440
+        <Lib Include="$(MSBuildStartupDirectory)/build/libstdcxx/libstdcxx.o" />        
         <!-- <Lib Include="$(KernelObjectFile)" /> -->
     </ItemGroup>
 
