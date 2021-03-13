@@ -1,3 +1,9 @@
 [submodule "module/libstdcxx"]
 	path = module/libstdcxx
 	url = https://github.com/fishjump/osdevc_libstdcxx.git
+[submodule "module/libport"]
+	path = module/libport
+	url = https://github.com/fishjump/osdevc_libport.git
+[submodule "module/libinterrupt"]
+	path = module/libinterrupt
+	url = https://github.com/fishjump/osdevc_libinterrupt.git

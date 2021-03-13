@@ -60,9 +60,9 @@
 
     <!-- Subprojects -->
     <ItemGroup>
-        <Subproject Include="libstdcxx">
-            <ProjectPath>$(ModulePath)/%(Identity)/%(Identity).vcxproj</ProjectPath>
-            <BuildPath>$(BuildPath)/%(Identity)</BuildPath>
+        <!-- Submodules -->
+        <Subproject Include="module">
+            <ProjectPath>%(Identity)/%(Identity).vcxproj</ProjectPath>
         </Subproject>
 
         <Subproject Include="bootloader;kernel" KeepMetadata="@(SubprojectMetadataName)">
@@ -81,7 +81,6 @@
         </Subproject>
 
         <Subproject Update="kernel">
-            <IncludeExtPath>$(ModulePath)/libstdcxx/include</IncludeExtPath>
             <OutputPath>%(BuildPath)/kernel.bin</OutputPath>
         </Subproject>
 

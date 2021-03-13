@@ -1,28 +1,30 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="check-env" DefaultTargets="build" ToolsVersion="16.0">
 
     <!-- Project -->
-    <!-- Defined in parent project file, overwrite if need -->
-    <PropertyGroup Condition="false">
-        <!-- <BuildPath></BuildPath> -->
-        <!-- <SourcePath></SourcePath> -->
-        <!-- <IncludePath></IncludePath> -->
-        <!-- <OutputPath></OutputPath> -->
-        <!-- <GCC></GCC> -->
-        <!-- <GXX></GXX> -->
-        <!-- <LD></LD> -->
+    <PropertyGroup>
+        <IncludePath>$(MSBuildProjectDirectory)/include</IncludePath>
+        <SourcePath>$(MSBuildProjectDirectory)/src</SourcePath>
+        <ModulePath>$(MSBuildStartupDirectory)/module</ModulePath>
+        <BuildPath>$(MSBuildStartupDirectory)/build/$(MSBuildProjectName)</BuildPath>
+        <TargetObject>$(BuildPath)/$(MSBuildProjectName).o</TargetObject>
+        <GXX>/usr/bin/g++</GXX>
+        <LD>/usr/bin/ld</LD>
     </PropertyGroup>
 
     <!-- Include -->
     <ItemGroup>
-        <Include Include="$(IncludePath)"/>
-        <Include Include="$(IncludeExtPath)"/>
+        <Include Include="$(IncludePath)" />
+        <Include Include="$(ModulePath)/libstdcxx/include" />
+        <Include Include="$(ModulePath)/libport/include" />
+        <Include Include="$(ModulePath)/libinterrupt/include" />
     </ItemGroup>
 
     <!-- Libs -->
     <ItemGroup>
         <Lib Include="$(HeadObjectFile)" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libstdcxx/libstdcxx.o" />        
-        <!-- <Lib Include="$(KernelObjectFile)" /> -->
+        <Lib Include="$(MSBuildStartupDirectory)/build/libstdcxx/libstdcxx.o" />
+        <Lib Include="$(MSBuildStartupDirectory)/build/libport/libport.o" />
+        <Lib Include="$(MSBuildStartupDirectory)/build/libinterrupt/libinterrupt.o" />
     </ItemGroup>
 
     <!-- Sources -->

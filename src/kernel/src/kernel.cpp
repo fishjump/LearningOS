@@ -61,8 +61,8 @@ void printLogo()
 
 extern "C" void kernelMain(void)
 {
-    system::interrupt::idt::initIdt();
-    system::interrupt::pic::initPic();
+    system::interrupt::initIdt();
+    system::interrupt::initPic();
     system::memory::initMemory();
     system::io::Screen::initGobalInstance();
     system::io::TextModeScreen::initGobalInstance();
