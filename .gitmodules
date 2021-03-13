@@ -1,3 +1,3 @@
 [submodule "module/libstdcxx"]
 	path = module/libstdcxx
-	url = https://github.com/fishjump/LearningOS.git
+	url = https://github.com/fishjump/osdevc_libstdcxx.git
