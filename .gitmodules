@@ -10,9 +10,21 @@
 [submodule "module/libboot"]
 	path = module/libboot
 	url = https://github.com/fishjump/osdevc_libboot.git
-[submodule "module/libinit"]
-	path = module/libinit
-	url = https://github.com/fishjump/osdevc_libinit.git
 [submodule "module/libmemory"]
 	path = module/libmemory
 	url = https://github.com/fishjump/osdevc_libmemory.git
+[submodule "module/libcolor"]
+	path = module/libcolor
+	url = https://github.com/fishjump/osdevc_libcolor.git
+[submodule "module/libscreen"]
+	path = module/libscreen
+	url = https://github.com/fishjump/osdevc_libscreen.git
+[submodule "module/libglobal"]
+	path = module/libglobal
+	url = https://github.com/fishjump/osdevc_libglobal.git
+[submodule "module/libfont"]
+	path = module/libfont
+	url = https://github.com/fishjump/osdevc_libfont.git
+[submodule "module/libtextscreen"]
+	path = module/libtextscreen
+	url = https://github.com/fishjump/osdevc_libtextscreen.git

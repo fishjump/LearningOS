@@ -1,13 +1,9 @@
 // #include <application/shell.hpp>
 #include <system.hpp>
 
-using namespace system::io;
-using namespace system::media;
-using namespace system::memory;
-
 void clear()
 {
-    Screen screen;
+    system::io::entity::Screen screen;
 
     for (int x = 0; x < screen.width; x++)
     {
@@ -23,12 +19,12 @@ void printLogo()
     // 1360 * 768
     // so, red : x:[595, 674] y:[299, 378]  green:  x:[685, 764] y:[299, 378]
     //     blue: x:[595, 674] y:[389, 468]  yellow: x:[685, 764] y:[389, 468]
-    Color ms_red = 0xff4325;
-    Color ms_blue = 0x06a4eb;
-    Color ms_green = 0x77b921;
-    Color ms_yellow = 0xf8b619;
+    system::media::entity::Color ms_red = 0xff4325;
+    system::media::entity::Color ms_blue = 0x06a4eb;
+    system::media::entity::Color ms_green = 0x77b921;
+    system::media::entity::Color ms_yellow = 0xf8b619;
 
-    Screen screen;
+    system::io::entity::Screen screen;
     for (int y = 299; y <= 378; y++)
     {
         for (int x = 595; x <= 674; x++)
@@ -61,21 +57,20 @@ void printLogo()
 
 extern "C" void kernelMain(void)
 {
-    system::init::initIdt();
-    system::init::initPic();
-    system::init::initMemory();
-    system::io::Screen::initGobalInstance();
-    system::io::TextModeScreen::initGobalInstance();
+    system::global::init::initIdt();
+    system::global::init::initPic();
+    system::global::init::initMemory();
+    system::global::init::initScreen();
+    system::global::init::initTextScreen();
     system::io::Keyboard::initGobalInstance();
-
-    auto &tmScreen = system::io::TextModeScreen::getGobalInstance();
-    auto &screen = tmScreen;
-    tmScreen.clear();
-    tmScreen.print("VerticalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.VerticalResolution)->print("\n");
-    tmScreen.print("HorizontalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.HorizontalResolution)->print("\n");
-    tmScreen.print("PixelsPerScanLine:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.PixelsPerScanLine)->print("\n");
-    tmScreen.print((uint64_t)screen.width)->print("\n");
-    tmScreen.fresh();
+    printLogo();
+    auto tmScreen = system::global::instance::getTextScreen();
+    tmScreen->clear();
+    tmScreen->print("VerticalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.VerticalResolution)->print("\n");
+    tmScreen->print("HorizontalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.HorizontalResolution)->print("\n");
+    tmScreen->print("PixelsPerScanLine:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.PixelsPerScanLine)->print("\n");
+    tmScreen->print((uint64_t)tmScreen->width)->print("\n");
+    tmScreen->fresh();
 
     uint8_t data;
 
@@ -89,21 +84,21 @@ extern "C" void kernelMain(void)
 
     while (((data = system::io::port::readBtye(0x1f7)) & 0b10000000) != 0)
     {
-        tmScreen.print((unsigned long long)data)->print("\n");
-        tmScreen.fresh();
+        tmScreen->print((unsigned long long)data)->print("\n");
+        tmScreen->fresh();
     }
-    tmScreen.print("disk ready\n");
+    tmScreen->print("disk ready\n");
     if (data == 65)
     {
         data = system::io::port::readBtye(0x1f1);
-        tmScreen.print((unsigned long long)data)->print("\n");
+        tmScreen->print((unsigned long long)data)->print("\n");
     }
     while (((data = system::io::port::readBtye(0x1f7)) & 0b00001000) == 0)
     {
-        tmScreen.print((unsigned long long)data)->print("\n");
-        tmScreen.fresh();
+        tmScreen->print((unsigned long long)data)->print("\n");
+        tmScreen->fresh();
     }
-    tmScreen.print("data ready\n");
+    tmScreen->print("data ready\n");
 
     for (int i = 0; i < 255; i++)
     {
@@ -112,14 +107,14 @@ extern "C" void kernelMain(void)
         str[0] = wdata;
         str[1] = wdata >> 8;
         str[2] = '\0';
-        tmScreen.print(str)->print(" ");
+        tmScreen->print(str)->print(" ");
     }
 
     // application::Shell shell;
     while (true)
     {
         // shell.getInput();
-        system::io::TextModeScreen::getGobalInstance().fresh();
+        tmScreen->fresh();
         asm("hlt");
     }
 }

@@ -6,15 +6,12 @@
 
     <!-- Subprojects -->
     <ItemGroup>
-        <!-- Submodules -->
-        <Subproject Include="libstdcxx;libport;libmemory;libboot;libinterrupt;libinit">
-            <ProjectPath>$(MSBuildProjectDirectory)/%(Identity)/%(Identity).vcxproj</ProjectPath>
-        </Subproject>
+        <Subproject Include="*/*.vcxproj" />
     </ItemGroup>
 
     <!-- Targets -->
     <Target Name="subproject">
-        <MSBuild Projects="%(Subproject.ProjectPath)" />
+        <MSBuild Projects="@(Subproject)" />
     </Target>
 
 </Project>

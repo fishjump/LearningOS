@@ -16,21 +16,20 @@
         <Include Include="$(IncludePath)" />
         <Include Include="$(ModulePath)/libstdcxx/include" />
         <Include Include="$(ModulePath)/libboot/include" />
+        <Include Include="$(ModulePath)/libfont/include" />
         <Include Include="$(ModulePath)/libport/include" />
         <Include Include="$(ModulePath)/libmemory/include" />
         <Include Include="$(ModulePath)/libinterrupt/include" />
-        <Include Include="$(ModulePath)/libinit/include" />
+        <Include Include="$(ModulePath)/libcolor/include" />
+        <Include Include="$(ModulePath)/libscreen/include" />
+        <Include Include="$(ModulePath)/libtextscreen/include" />
+        <Include Include="$(ModulePath)/libglobal/include" />
     </ItemGroup>
 
     <!-- Libs -->
     <ItemGroup>
         <Lib Include="$(HeadObjectFile)" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libstdcxx/libstdcxx.o" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libboot/libboot.o" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libport/libport.o" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libmemory/libmemory.o" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libinterrupt/libinterrupt.o" />
-        <Lib Include="$(MSBuildStartupDirectory)/build/libinit/libinit.o" />
+        <Lib Include="$(MSBuildStartupDirectory)/build/*/lib*.o" />
     </ItemGroup>
 
     <!-- Sources -->

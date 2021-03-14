@@ -9,7 +9,10 @@
                 "${workspaceFolder}/module/libport/include",
                 "${workspaceFolder}/module/libmemory/include",
                 "${workspaceFolder}/module/libinterrupt/include",
-                "${workspaceFolder}/module/libinit/include"
+                "${workspaceFolder}/module/libcolor/include",
+                "${workspaceFolder}/module/libscreen/include",
+                "${workspaceFolder}/module/libtextscreen/include",
+                "${workspaceFolder}/module/libglobal/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

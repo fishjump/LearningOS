@@ -1,7 +1,7 @@
 #pragma once
 
 #include <boot/boot.hpp>
-#include <init/init.hpp>
+#include <global/global.hpp>
 #include <interrupt/interrupt.hpp>
 #include <memory/memory.hpp>
 
