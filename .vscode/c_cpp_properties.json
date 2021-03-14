@@ -5,8 +5,11 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/module/libstdcxx/include",
+                "${workspaceFolder}/module/libboot/include",
+                "${workspaceFolder}/module/libport/include",
+                "${workspaceFolder}/module/libmemory/include",
                 "${workspaceFolder}/module/libinterrupt/include",
-                "${workspaceFolder}/module/libport/include"
+                "${workspaceFolder}/module/libinit/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

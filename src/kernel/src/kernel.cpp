@@ -61,9 +61,9 @@ void printLogo()
 
 extern "C" void kernelMain(void)
 {
-    system::interrupt::initIdt();
-    system::interrupt::initPic();
-    system::memory::initMemory();
+    system::init::initIdt();
+    system::init::initPic();
+    system::init::initMemory();
     system::io::Screen::initGobalInstance();
     system::io::TextModeScreen::initGobalInstance();
     system::io::Keyboard::initGobalInstance();
@@ -71,9 +71,9 @@ extern "C" void kernelMain(void)
     auto &tmScreen = system::io::TextModeScreen::getGobalInstance();
     auto &screen = tmScreen;
     tmScreen.clear();
-    tmScreen.print("VerticalResolution:")->print((uint64_t)system::boot::bootInfo->graphicInfo.VerticalResolution)->print("\n");
-    tmScreen.print("HorizontalResolution:")->print((uint64_t)system::boot::bootInfo->graphicInfo.HorizontalResolution)->print("\n");
-    tmScreen.print("PixelsPerScanLine:")->print((uint64_t)system::boot::bootInfo->graphicInfo.PixelsPerScanLine)->print("\n");
+    tmScreen.print("VerticalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.VerticalResolution)->print("\n");
+    tmScreen.print("HorizontalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.HorizontalResolution)->print("\n");
+    tmScreen.print("PixelsPerScanLine:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.PixelsPerScanLine)->print("\n");
     tmScreen.print((uint64_t)screen.width)->print("\n");
     tmScreen.fresh();
 
