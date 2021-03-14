@@ -24,6 +24,7 @@
         <Include Include="$(ModulePath)/libscreen/include" />
         <Include Include="$(ModulePath)/libtextscreen/include" />
         <Include Include="$(ModulePath)/libglobal/include" />
+        <Include Include="$(ModulePath)/libkeyboard/include" />
     </ItemGroup>
 
     <!-- Libs -->

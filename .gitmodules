@@ -28,3 +28,6 @@
 [submodule "module/libtextscreen"]
 	path = module/libtextscreen
 	url = https://github.com/fishjump/osdevc_libtextscreen.git
+[submodule "module/libkeyboard"]
+	path = module/libkeyboard
+	url = https://github.com/fishjump/osdevc_libkeyboard.git
