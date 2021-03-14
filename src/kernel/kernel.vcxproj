@@ -7,7 +7,7 @@
         <ModulePath>$(MSBuildStartupDirectory)/module</ModulePath>
         <BuildPath>$(MSBuildStartupDirectory)/build/$(MSBuildProjectName)</BuildPath>
         <TargetObject>$(BuildPath)/$(MSBuildProjectName).o</TargetObject>
-        <GXX>/usr/bin/g++</GXX>
+        <GXX>/usr/bin/g++-7</GXX>
         <LD>/usr/bin/ld</LD>
     </PropertyGroup>
 

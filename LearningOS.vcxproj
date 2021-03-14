@@ -54,7 +54,7 @@
         <ModulePath>$(MSBuildStartupDirectory)/module</ModulePath>
         <OutputPath>/mnt/c/Users/z1052/</OutputPath>
         <GCC>/usr/bin/gcc</GCC>
-        <GXX>/usr/bin/g++</GXX>
+        <GXX>/usr/bin/g++-7</GXX>
         <LD>/usr/bin/ld</LD>
     </PropertyGroup>
 
