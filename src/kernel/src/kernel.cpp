@@ -61,11 +61,13 @@ extern "C" void kernelMain(void)
     system::global::init::initPic();
     system::global::init::initMemory();
     system::global::init::initScreen();
-    system::global::init::initTextScreen();
+    system::global::init::initDefaultFont();
+    system::global::init::initTextScreen(
+        *system::global::instance::getDefaultFont(),
+        system::media::common_color::white);
     system::io::Keyboard::initGobalInstance();
     printLogo();
     auto tmScreen = system::global::instance::getTextScreen();
-    tmScreen->clear();
     tmScreen->print("VerticalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.VerticalResolution)->print("\n");
     tmScreen->print("HorizontalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.HorizontalResolution)->print("\n");
     tmScreen->print("PixelsPerScanLine:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.PixelsPerScanLine)->print("\n");
