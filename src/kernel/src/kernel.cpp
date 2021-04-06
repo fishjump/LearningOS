@@ -65,7 +65,6 @@ extern "C" void kernelMain(void)
     system::global::init::initTextScreen(
         *system::global::instance::getDefaultFont(),
         system::media::common_color::white);
-    system::io::Keyboard::initGobalInstance();
     printLogo();
     auto tmScreen = system::global::instance::getTextScreen();
     tmScreen->print("VerticalResolution:")->print((uint64_t)system::boot::getBootInfo()->graphicInfo.VerticalResolution)->print("\n");
@@ -113,9 +112,12 @@ extern "C" void kernelMain(void)
     }
 
     // application::Shell shell;
+    auto kb = system::global::instance::getKeyboard();
+    kb->setHandler(handler::keyboardEventHandler);
     while (true)
     {
         // shell.getInput();
+        kb->serve();
         tmScreen->fresh();
         asm("hlt");
     }

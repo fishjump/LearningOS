@@ -12,7 +12,8 @@
                 "${workspaceFolder}/module/libcolor/include",
                 "${workspaceFolder}/module/libscreen/include",
                 "${workspaceFolder}/module/libtextscreen/include",
-                "${workspaceFolder}/module/libglobal/include"
+                "${workspaceFolder}/module/libglobal/include",
+                "${workspaceFolder}/module/libkeyboard/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
