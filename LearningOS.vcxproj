@@ -52,7 +52,6 @@
         <BuildPath>$(MSBuildStartupDirectory)/build</BuildPath>
         <SourcePath>$(MSBuildStartupDirectory)/src</SourcePath>
         <ModulePath>$(MSBuildStartupDirectory)/module</ModulePath>
-        <OutputPath>/mnt/c/Users/z1052/</OutputPath>
         <GCC>/usr/bin/gcc</GCC>
         <GXX>/usr/bin/g++</GXX>
         <LD>/usr/bin/ld</LD>
@@ -93,8 +92,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Command Include="cd C:\Users\z1052"></Command>
-        <Command Include=".\run.ps1"></Command>
+        <Command Include="qemu-system-x86_64 -L 'C:\Program Files\qemu' -bios OVMF.fd -net none -drive format=raw,file=build/LearningOS.img"></Command>
         <Command Include="exit"></Command>
     </ItemGroup>
 
@@ -146,7 +144,6 @@
 
     <Target Name="check-env">
         <MakeDir Directories="$(BuildPath)" />
-        <MakeDir Directories="$(OutputPath)" />
 
         <SetSerializedProperties ItemGroup="@(Subproject)">
             <Output TaskParameter="ResultItemGroup" ItemName="Result" />

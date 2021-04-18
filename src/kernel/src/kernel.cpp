@@ -57,18 +57,17 @@ extern "C" void kernelMain(void) {
     printLogo();
     auto tmScreen = system::global::instance::getTextScreen();
     tmScreen->print("VerticalResolution:")
-        ->print((uint64_t)system::boot::getBootInfo()
-                    ->graphicInfo.VerticalResolution)
+        ->print(
+            system::boot::getBootInfo()->graphicInfo.VerticalResolution)
         ->print("\n");
     tmScreen->print("HorizontalResolution:")
-        ->print((uint64_t)system::boot::getBootInfo()
-                    ->graphicInfo.HorizontalResolution)
+        ->print(
+            system::boot::getBootInfo()->graphicInfo.HorizontalResolution)
         ->print("\n");
     tmScreen->print("PixelsPerScanLine:")
-        ->print((uint64_t)system::boot::getBootInfo()
-                    ->graphicInfo.PixelsPerScanLine)
+        ->print(system::boot::getBootInfo()->graphicInfo.PixelsPerScanLine)
         ->print("\n");
-    tmScreen->print((uint64_t)tmScreen->width)->print("\n");
+    tmScreen->print(tmScreen->width)->print("\n");
     tmScreen->fresh();
 
     uint8_t data;
@@ -82,16 +81,16 @@ extern "C" void kernelMain(void) {
     system::io::port::writeBtye(0x1f7, 0x20);
 
     while(((data = system::io::port::readBtye(0x1f7)) & 0b10000000) != 0) {
-        tmScreen->print((unsigned long long)data)->print("\n");
+        tmScreen->print(data)->print("\n");
         tmScreen->fresh();
     }
     tmScreen->print("disk ready\n");
     if(data == 65) {
         data = system::io::port::readBtye(0x1f1);
-        tmScreen->print((unsigned long long)data)->print("\n");
+        tmScreen->print(data)->print("\n");
     }
     while(((data = system::io::port::readBtye(0x1f7)) & 0b00001000) == 0) {
-        tmScreen->print((unsigned long long)data)->print("\n");
+        tmScreen->print(data)->print("\n");
         tmScreen->fresh();
     }
     tmScreen->print("data ready\n");
@@ -105,11 +104,9 @@ extern "C" void kernelMain(void) {
         tmScreen->print(str)->print(" ");
     }
 
-    // application::Shell shell;
     auto kb = system::global::instance::getKeyboard();
     kb->setHandler(handler::keyboardEventHandler);
     while(true) {
-        // shell.getInput();
         kb->serve();
         tmScreen->fresh();
         asm("hlt");
